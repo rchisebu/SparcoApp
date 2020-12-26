@@ -1,0 +1,168 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+/* Start - Success Fail Page */
+#overlay{
+    background-image: url(img/arrow_bg.svg) !important;
+    /*background-image: url(http://127.0.0.1/sparco/app/img/arrow_bg.svg);*/
+    background-size: 300px auto;        
+}
+#status-info-wrap{
+    padding: 10px;
+    /*background-color: #c7c7e8;*/
+}
+
+#inner-status-info-wrap{
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    /*-webkit-box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);*/
+    /*box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+/*Circle Start*/
+.circle-loader {
+  /*margin-bottom: 3.5em;*/
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-left-color: #5cb85c;
+  animation: loader-spin 1.2s infinite linear;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  border-radius: 50%;
+  width: 7em;
+  height: 7em;
+}
+.load-complete {
+  -webkit-animation: none;
+  animation: none;
+  border-color: #5cb85c;
+  transition: border 500ms ease-out;
+}
+.checkmark {
+  /*display: none;*/
+}
+.checkmark.draw:after {
+  animation-duration: 800ms;
+  animation-timing-function: ease;
+  animation-name: checkmark;
+  transform: scaleX(-1) rotate(135deg);
+}
+.checkmark:after {
+  opacity: 1;
+  height: 3.5em;
+  width: 1.75em;
+  transform-origin: left top;
+  border-right: 3px solid #5cb85c;
+  border-top: 3px solid #5cb85c;
+  content: '';
+  left: 1.75em;
+  top: 3.5em;
+  position: absolute;
+}
+@keyframes loader-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes checkmark {
+  0% {
+    height: 0;
+    width: 0;
+    opacity: 1;
+  }
+  20% {
+    height: 0;
+    width: 1.75em;
+    opacity: 1;
+  }
+  40% {
+    height: 3.5em;
+    width: 1.75em;
+    opacity: 1;
+  }
+  100% {
+    height: 3.5em;
+    width: 1.75em;
+    opacity: 1;
+  }
+}
+/*Circle End*/
+/*
+.status-cross {
+  position: absolute;
+  right: 32px;
+  top: 32px;
+  width: 32px;
+  height: 32px;
+  opacity: 0.3;
+}
+*/
+.status-cross{
+    /*display: none;*/
+    /*          
+    position: absolute;
+    right: 39px;
+    top: 29px;
+    width: 40px;
+    height: 40px;*/
+    /* opacity: 0.3; */
+}
+.status-cross:hover {
+  opacity: 1;
+}
+/*      
+.status-cross:before, .status-cross:after {
+  position: absolute;
+  left: 15px;
+  content: '';
+  height: 33px;
+  width: 2px;
+  background-color: #333;
+}*/
+.status-cross:before, .status-cross:after {
+    position: absolute;
+    /*left: 30px;*/
+    content: '';
+    height: 41px;
+    width: 3px;
+    background-color: #de1c1c;
+    right: 48px;
+    top: 29px;
+}
+.status-cross:before {
+  transform: rotate(45deg);
+}
+.status-cross:after {
+  transform: rotate(-45deg);
+  
+}
+
+
+#payment-status,
+#order-status{
+    margin: 0;
+}
+#order-info{
+    border: 1px solid lightgrey;
+    margin: 10px;
+    padding: 8px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#order-info h6,
+#order-info p{
+    margin: 0;
+}
+
+/* End - Success Fail Page */
+
+

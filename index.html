@@ -1,0 +1,4403 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+	<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *" />
+	<link rel="stylesheet" type="text/css" href="css/index.css" />
+	<link rel="stylesheet" type="text/css" href="css/materialize.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/material-icons.css" />
+	<link rel="stylesheet" href="css/intlTelInput.css">
+	<link rel="stylesheet" href="css/jquery-pincode-autotab.min.css">
+	<link rel="stylesheet" href="css/animate.css">
+	<title>SendStar - Make it possible!</title>
+	<style>
+        body {
+            background-image: url(./img/arrow_bg.svg);
+            background-size: 300px auto;
+        }       
+		/*USER LOGIN*/
+		#login-page{
+			/*display: flex;*/
+			/*display: none;*/
+			flex-direction: column;  
+			align-items: center;
+		}
+		#code-input-page{
+			/*display: block;*/
+			display: none;
+		}
+		#onboarding_number_entry {
+			padding-top: 36px;
+			/*margin: 5px 40px;*/
+			width: 350px;
+			/* background-color: #010101; */
+		}
+
+		.intl-tel-input {
+			display: block !important;
+			border: 1px solid #485f9f  !important;
+			border-radius: 10px  !important;
+		}
+
+		#onboarding_number_entry input {
+			box-sizing: border-box;
+			/*width: 80%;*/
+			/*width: auto;*/
+			display: block;
+			margin: auto;
+			border: none;
+			padding-left: 87px !important;
+		}
+
+		#onboarding_number_entry input:focus,
+		#onboarding_number_entry input:active {
+			box-shadow: none;
+		}
+
+		.onboarding_action_area {
+			position: fixed;
+			width: 100%;
+			padding: 10px;
+			bottom: 0;
+			text-align: center;
+			background-color: #DFDFDF;
+		}
+		#close-code-input-page{
+			font-size: 25px;
+			position: absolute;
+			top: 0;
+			right: 15px;
+			font-weight: bold;
+			color: #5e5e5e;
+		}
+
+		.pin-code-wrap{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		}
+		.pin-code-wrap input {
+			margin: 0 5px !important;
+			text-align: center !important;
+			line-height: 80px !important;
+			font-size: 50px !important;
+			border: solid 1px #ccc !important;
+			box-shadow: 0 0 5px #ccc inset !important;
+			outline: none !important;
+			width: 20% !important;
+			transition: all .2s ease-in-out !important;
+			border-radius: 3px !important;
+			padding: 0 !important;
+			height: auto !important;
+		}
+		.pin-code-wrap input:focus {
+			border-color: #435794 !important;
+			box-shadow: 0 0 5px #435794 inset !important;
+		}
+
+		.pin-code-wrap input::selection {
+			background: transparent !important;
+		}
+
+		.pages{
+			position: fixed;
+			display: block;
+			top: 0;
+			z-index: 999;
+			height: 100vh;
+			width: 100vw;
+			background: #ffffff;
+			overflow-y: scroll; 
+		}
+		#add-card-page,
+		#addr-auth-page{
+			/*z-index: 1200;*/
+			width: 100vw;
+			top: 0 !important;
+			min-height: 100vh !important;
+		}
+		#cc-form input{
+			position: relative;
+			z-index: 1500;
+		}
+		.back-btn{
+			padding-left: 20px;
+		}
+		/*		#tx-page{
+					display: none;
+				}
+		*/
+		/*HOME*/
+		#service_tiles {
+			margin-top: 60px;
+			box-sizing: border-box;
+			/*display: block;*/
+			display: grid;
+			width: 90%;
+			/*margin-left: 5%;*/
+			background-color: rgba(255, 255, 255, 0.8);
+			padding: 10px;
+			/*backdrop-filter: blur(10px);*/
+			height: 250px;
+			grid-gap: 10px;
+			grid-template-areas:
+				'servicestitle servicestitle'
+				'servicetopup servicedata'
+				'servicetv  serviceelectricity'
+				'serviceloans servicetransfers';	
+		}
+
+		#service_tiles h5 {  
+			margin: 0;
+			/*margin-top: 5px;*/
+			padding: 0;
+			font-size: 15px;
+			text-align: center;
+			color: #010101;
+			text-transform: uppercase;
+			font-weight: bold;
+		}
+		#service_tiles div {
+			/*display: block;*/
+			/*		    
+			display: flex;
+			float: left;*/
+			/* border-radius: 8px; */
+			/*margin: 6.66666666%;*/
+			/*width: 35%;*/
+			background-color: white;
+			box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+			/*flex-direction: column;*/
+			/*align-items: center;*/
+			/*justify-content: center;*/
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+		}
+		.service-title{
+			box-shadow: none !important;
+			/*height: 10px;*/
+		}
+		.service {
+			color: #435794;
+		}
+		.service-title { 
+			grid-area: servicestitle; 
+		}
+		.service-topup { 
+			grid-area: servicetopup; 
+		}
+
+		.service-tv { 
+			grid-area: servicetv; 
+		}
+		.service-electricity { 
+			grid-area: serviceelectricity; 
+		}
+		.service-data { 
+			grid-area: servicedata; 
+		}
+		.service-transfers{
+			grid-area: servicetransfers
+		}
+		.service-loans{
+			grid-area: serviceloans
+		}
+		.service-history{
+			grid-area: servicehistory
+		}
+		#service_tiles div i{
+			font-size: 40px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+		#service_tiles div span{
+			font-weight: bold;
+			font-size: 10px;
+		}
+
+		#scan_btn{
+			margin: 45px auto 0;
+			display: flex;
+			width: 90%;
+			max-width: 300px;
+			align-items: center;
+			justify-content: center;
+			background: #435794;
+			z-index: 0;
+			display: none;
+		}
+		.nav{
+    		background-color: #435794;
+		}
+		.nav-wrapper,
+		.sparco-blue{
+			background: #435794 !important;
+		}
+		.nav-wrapper a{
+			float: left;
+			position: relative;
+			z-index: 1;
+			height: 56px;
+			margin: 0 5px;	
+		}
+		.tabs .tab a {
+			/*color: rgba(38, 166, 154, 0.7) !important;*/
+			color: rgba(0, 0, 0, 1) !important;
+			/*Custom Text Color*/
+		}
+
+		.tabs .tab a:hover {
+			color:#26a69a;
+			/*Custom Color On Hover*/
+		}
+
+		.tabs .tab a:focus.active {
+			color:#26a69a;
+			/*Custom Text Color While Active*/
+			background-color: rgba(38, 166, 154, 0.2);
+			/*Custom Background Color While Active*/
+		}
+
+		.tabs .indicator {
+			/*background-color:#26a69a;*/
+			background-color: rgba(67, 87, 148, 1) !important;
+			/*Custom Color Of Indicator*/
+		}
+		.contacts-loader-wrap,
+		.contacts-error-wrap{
+			display: none;
+			align-items: center;
+			justify-content: center;
+			padding: 10px;	
+		}
+		.contacts-error-wrap{
+			text-transform: uppercase;
+			color: red;
+		}
+		#complete-profile-wrap,
+		#dialpad-inner-wrap,
+		#add-card-inner-wrap{
+			background-color: white;
+			/* box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); */
+			width: 90%;
+			padding: 5px;
+			margin: 10px auto;	
+			/* border-radius: 8px;	 */
+		}
+		.sparco-center-btn{
+			display: block;
+			margin: auto;
+		}
+		.data-service,
+		.tv-service,
+		.pm-type{
+			height: 60px;
+			width: 60px;		
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            border-radius: 8px;
+		}
+		#dstv-topup{
+            background-image: url(./img/dstv.png);
+		}
+		#gotv-topup{
+			background-image: url(./img/gotv.png);
+		}
+		#data-service-heading{ 
+			grid-area: dataserviceheading; 
+		}
+		#liquiddata-topup { 
+			grid-area: liquiddatatopup; 
+			background-image: url(./img/cliquid.png);
+		}
+		#vodafonedata-topup { 
+			grid-area: vodafonedatatopup; 
+			background-image: url(./img/vodafone.png);
+		}
+		#mtndata-topup { 
+			grid-area: mtndatatopup;
+			background-image: url(./img/mtn.png); 
+		}
+		#data-service-wrap{
+			display: grid;
+			grid-template-areas:
+				'dataserviceheading dataserviceheading dataserviceheading'
+				'liquiddatatopup vodafonedatatopup mtndatatopup';
+			grid-gap: 5px;
+			width: 170px;
+			margin: auto;
+			justify-items: center;
+		}
+		#tv-service-wrap{
+			display: grid;
+			grid-template-areas:
+				'tvserviceheading tvserviceheading'
+				'dstvtopup gotvtopup';
+			grid-gap: 5px;
+			width: 170px;
+			margin: auto;
+			justify-items: center;
+		}
+
+		#pm-type-modal{
+			max-height: 55% !important;
+		}
+
+		#tv-service-heading{ 
+			grid-area: tvserviceheading; 
+		}
+
+		#dstv-topup { 
+			grid-area: dstvtopup; 
+		}
+		#gotv-topup { 
+			grid-area: gotvtopup; 
+		}
+
+		.pm-type{
+			height: 80px;
+			width: 110px;
+			background-size: contain;
+		}
+		#pm-heading{
+			grid-area: pmheading; 
+		}
+		#add-card-pm{
+			background-image: url(./img/visa-mastercard.jpg);
+			grid-area: cardpm; 
+
+		}
+		#add-mtn-pm{
+			background-image: url(./img/mtn_money_logo.png);
+			grid-area: mtnpm; 
+		}
+		#add-zamtel-pm{
+			background-image: url(./img/payment_methods/zamtel.png);
+			grid-area: zamtelpm; 
+		}
+		#add-airtel-pm{
+			background-image: url(./img/payment_methods/airtel.jpg);
+			grid-area: airtelpm; 
+		}
+		#add-mpesa-pm{
+			background-image: url(./img/payment_methods/m-pesa-logo.png);
+			grid-area: mpesapm; 
+		}
+		#pm-wrap{
+			display: grid;
+			grid-template-areas:
+				'pmheading pmheading'
+				'cardpm mtnpm'
+				'zamtelpm airtelpm'
+				'mpesapm .';
+			grid-gap: 5px;
+			/*width: 170px;*/
+			margin: auto;
+			justify-items: center;
+		}
+		#smart-card-number-btn,
+		#tv-modal-select-funding-source,
+		#tv-amount-due-input{
+			display: none;
+		}
+		#tv-loading-wrap{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.tab a:hover,
+		.tab a.active {
+			background-color: rgba(0, 0, 255, .35) !important;
+		}
+		.nav-wrapper span{
+			margin: 10px;
+			font-size: 15px;
+			font-weight: bold;
+		}
+		.user-view{
+			padding: 20px;
+			background-color: #ECEFF1;
+			background-image: url(./img/sparco_nav.png);
+			background-repeat: no-repeat;
+			background-position: center;
+			height: 150px;
+			background-size: contain;
+
+		}
+
+		/*USER PROFILE PAGE - START*/
+		#user-info-wrap{
+			padding: 10px;
+			/*background-color: #c7c7e8;*/
+		}
+		#user-name-image-wrap{
+			padding: 10px;
+			display: flex;
+			justify-content: center;
+			background-color: #c7c7e8;
+		}
+		#inner-user-name-image-wrap{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+		#user-image-wrap{
+			display: flex;
+			justify-content: center;
+			border: 1px solid;
+			border-radius: 50%;
+			height: 50px;
+			width: 50px;
+			align-items: center;
+			overflow: hidden;
+		}
+		#user-name-wrap,
+		#user-dob-wrap,
+		#user-sex-wrap,
+		#user-email-wrap,
+		#user-phone-wrap,
+		#user-pw-wrap{
+			font-size: 20px;
+			/*text-align: center;*/
+			display: flex;
+			align-items: center;
+			margin-top: 10px;
+		}
+		#user-email,
+		#user-fname,
+		#user-lname,
+		#user-phone,
+		#user-pw{
+			/*margin: 0 5px;*/
+			flex-grow: 1;
+			overflow: hidden;
+		}
+		#user-email-title,
+		#user-name-title,
+		#user-phone-title,
+		#user-pw-title{
+			display: flex;
+			align-items: center;
+			width: 120px;
+			flex-shrink: 0;
+		}
+		#user-email-title,
+		#edit-user-email,
+		#user-name-title,
+		#edit-user-name,
+		#edit-user-sex,
+		#edit-user-dob,
+		#user-phone-title,
+		#edit-user-phone,
+		#edit-user-location,
+		#edit-user-id,
+		#user-pw-title,
+		#edit-user-pw{
+			color: #a7a6a6;
+		}
+
+
+		#edit-user-profile-overlay{
+		    height: 100vh;
+		    width: 100vw;
+		    position: fixed;
+		    top: 0;
+		    background-color: #0009;
+			/*background: url(https://sparco.io/90percent-transparent.png) no-repeat center center fixed; */
+			background-color: rgba(0, 0, 0, 0.8);
+			background-size: cover;
+		    display: flex;
+		    justify-content: center;
+		    align-self: center;
+		}
+		/*
+			#user-profile-wrap{
+				
+				width: 80%;
+				height: 135px;
+				background-color: #fff;
+				margin: 80px auto;
+				border-radius: 5px;
+				padding: 5px;
+				
+			}
+		*/
+		#user-profile-wrap{
+			padding-top: 10px;
+		}
+		#user-profile-btns-wrap{
+			display: flex;
+		} 
+		#user-profile-btns-wrap a{
+			flex-grow: 1;
+			margin: 5px;
+		}
+		/*		
+		h6{
+			text-align: center;
+			margin: 0;
+		}*/
+
+		.user-value-title-wrap{
+			display: flex;
+			align-items: center;
+			/*background-color: lightgrey;*/
+			padding: 3px;
+		}
+		.user-value-title-wrap{
+			border-bottom: 1px solid lightgrey;
+		}
+		.user-value-title{
+			display: flex;
+			flex-direction: column;
+			flex-grow: 1;
+		}
+		.user-value{
+			font-size: 18px;
+			/* font-weight: bold; */
+		}
+		.user-title{
+			color: #848080;
+		}
+		#inner-user-info-wrap{
+			background-color: rgba(255, 255, 255, 0.8);
+			/* border-radius: 8px; */
+			/* -webkit-box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
+			box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3); */
+		}
+		/*USER PROFILE PAGE - END*/
+
+		/*PM-START*/
+		.cards-wrap{
+			background-color: rgba(255, 255, 255, 0.8);
+			border-radius: 8px;
+			-webkit-box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
+			box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
+			height: 80px;
+			margin: 10px;
+		}
+		.transaction{
+			margin: 5px !important;
+			border: none !important;
+			background-color: rgba(255, 255, 255, 0.8);
+			border-radius: 8px;
+			-webkit-box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
+			box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
+			margin: 10px;
+			display: flex;
+		}
+		.transaction-info-right{
+			display: flex;
+			flex-direction: column;
+			min-width: 95px;
+    		flex-shrink: 0;
+		}
+		.payment-method-img-wrap{
+		    width: 80px;
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		}
+		.payment-method-img{
+		    height: 20px;
+		}
+		.payment-method-text-wrap{
+		    display: flex;
+		    justify-content: center;
+		    /*align-items: center;*/
+		    flex-grow: 1;
+		    flex-direction: column;
+		}
+		.remove-payment-method-wrap{
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    padding: 10px;
+
+		    cursor: pointer;
+		}
+
+		.remove-payment-method-wrap i{
+		    font-size: 25px;
+		}
+
+		.payment-method-wrap{
+		    /*width: 80%;*/
+		    height: 80px;
+		    background-color: #fff;
+		    /*position: absolute;*/
+		    /*bottom: 10px;*/
+		    /*display: block;*/
+		    margin: 5px auto;
+		    border-radius: 5px;
+		    /*border: 1px solid #d3d3d3;*/
+		    display: flex;
+		    align-items: center;
+		    /*justify-content: center;*/
+		    /*padding-left: 20px;*/
+		}
+
+		/*PM - END*/
+
+		/*TX*/
+		/*
+		.transaction{
+			position: relative;
+			min-height: 80px;
+		}
+		.transaction-info-left{
+			display: flex;
+			flex-direction: column;
+			flex-grow: 1;
+		}
+		.transaction-recipient{
+			display: flex;
+			flex-direction: column;
+			flex-grow: 1;
+		}
+		.transaction-amount{
+			font-size: 20px;
+			flex-grow: 1;
+		}
+		.transaction-id{
+			font-size: 10px;
+			left: 15px;
+			bottom: 5px;		
+		}
+		.transaction-date{
+			font-size: 10px;
+			right: 15px;
+			bottom: 5px;
+		}
+		*/
+		/* .input-field.suffix i {
+			position: absolute;
+			width: 3rem;
+			font-size: 2rem;
+			transition: color .2s;
+			top: 0px;
+			right: 0px;
+		} */
+
+		/* ACTIVITIES - START */
+        #activities{
+            max-width: 500px;
+            margin: auto;
+            border: none;
+        }
+        .activity{
+            display: flex;
+            min-height: 4.125rem;
+            /* border: none !important; */
+            border-bottom: 1px dotted #9da3a6 !important;
+        }
+        .activity-date-month{
+            display: flex;
+            flex-direction: column;
+            /* width: 80px; */
+            width: 15%;
+            flex-shrink: 0;
+            padding: 0 .3125rem 0 .75rem;
+            vertical-align: middle;
+        }
+        .activity-date{
+            /* font-size: 35px; */
+            /* padding: 5px; */
+            text-align: center;
+            font-weight: 400;
+            display: block;
+            line-height: 1.3;
+            font-size: .9375rem;
+            line-height: 1.5rem;
+            font-family: Helvetica ,Arial,sans-serif;
+            color: #2c2e2f;
+        }
+        .activity-month{
+            /* font-size: 20px; */
+            font-size: .9375rem;
+            text-align: center;
+            /* padding: 2px; */
+            font-weight: bold;
+        }
+        .activity-info{
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .activity-info-header{
+            /* font-size: 20px; */
+            /* padding: 5px 0; */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+            line-height: 1.3;
+            color: #2c2e2f;
+            font-size: .9375rem;
+            line-height: 1.5rem;
+            font-family: PayPalSansSmall-Regular,Helvetica Neue,Arial,sans-serif;
+            font-weight: 400;            
+        }
+        .activity-info-desc{
+            color: #687173;
+            /* display: inline-block;
+            line-height: 1.3;
+            font-size: .8125rem;
+            font-family: PayPalSansSmall-Regular,Helvetica Neue,Arial,sans-serif;
+            font-weight: 400; */
+            font-size: .9375rem;
+        }
+        .activity-amount{
+            /* width: 80px; */
+            width: 30%;
+            flex-shrink: 0;
+            /* display: flex; */
+            /* align-items: center; */
+            display: block;
+            line-height: 1.3;
+        }
+        .activity-amount-details{
+            /* font-size: 15px; */
+            /* font-size: .9375rem; */
+            font-size: 1,1rem;
+            font-weight: 500;
+            display: block;
+            line-height: 1.3;
+            color: #2c2e2f;
+        }
+		/* ACTIVITIES - END */
+		#payment-status-msg{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+		#tx-modal-details{
+			text-align: center;
+		}
+		#tx-modal-destination-header:after,
+		#tx-modal-token-header:after {
+			position: absolute;
+			content: '';
+			height: 2px;
+			bottom: -4px; 
+			margin: 0 auto;
+			left: 0;
+			right: 0;
+			width: 150%;
+			background: green;
+		}
+
+		#tx-modal-destination,
+		#tx-modal-token,
+		#tx-modal-amount{
+			font-weight: bold;
+		}
+		#tx-modal-debit-status,
+		#tx-modal-credit-status{
+			margin: 0;
+			font-size: 12px;
+		}
+		#tx-modal-debit-err,
+		#tx-modal-credit-err{
+			margin: 0;
+			font-size: 10px;
+		}
+		.icon-green{
+			color: #388e3c !important;
+		}
+		.icon-red{
+			color: #d32f2f !important;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div id="loading-page" class="page" style="height:100vh; display: flex; align-items: center;justify-content: center;flex-direction: column;">
+		<h6>SendStar is loading...</h6>
+		<img src="./img/dloading.gif" height="40">
+	</div>
+	<div id="login-page" class="page" style="display: none;">
+		<!-- <h3>Login Page</h3> -->
+		<img src="./img/sparco_nav.png" style="width: 100%; max-width: 350px; margin-top: 20px;">
+		<h6 style="text-align: center;font-size: 16px;color: #435794;font-weight: bold; max-width: 350px;">
+			 Welcome to SendStar. To get started, please enter your phone number or email address.
+		</h6>
+		<div id="onboarding_number_entry">
+			<input type="tel" id="user-phone" value="">
+		</div>
+		
+		<br>
+		
+		<div id="onboarding_email_entry" style="width: 350px; box-sizing: border-box;">
+			<input placeholder="eMail" class="intl-tel-input" type="email" id="user-email-onboarding">
+		</div>
+		
+		<div class="center">
+			<img id="checking-num-loader" style="display: none;" src="./img/dloading.gif" height="40px">
+		</div>
+		<div class="onboarding_action_area">
+			<!-- <div onclick="get_number();" class="btn waves-effect waves-light">Next</div> -->
+			<!-- <button id="check-num-btn" onclick="get_number();"  class="btn waves-effect waves-light sparco-blue" style="    min-width: 200px;">Next</button> -->
+			<button id="check-num-btn" onclick="authenticate();"  class="btn waves-effect waves-light sparco-blue" style="    min-width: 200px;">Next</button>
+		</div>
+	</div>
+	<div id="code-input-page" class="page" style="display: none;">
+		<span id="close-code-input-page">X</span>
+		<h5 id="login-code-info" style="text-align: center; margin-top: 50px;">Enter OTP send to you number.</h5>
+		<div class="pin-code-wrap">
+			<input id="sms_digit_1" type="tel" maxlength="1" value="" required>
+			<input id="sms_digit_2" type="tel" maxlength="1" value="" required>
+			<input id="sms_digit_3" type="tel" maxlength="1" value="" required>
+			<input id="sms_digit_4" type="tel" maxlength="1" value="" required>
+		</div>
+		<div class="center">
+			<img id="checking-code-loader" style="display: none;" src="./img/dloading.gif" height="40px">
+		</div>
+		<div id="passcode-msg" style="text-align: center;color: red; margin: 10px auto;display: none;">Invalid Pass Code.</div>
+		<div class="onboarding_action_area" style="display: flex;flex-direction: column;align-items: center;">
+			<!-- <button id="check-sms-code-btn" class="btn waves-effect waves-light sparco-blue" style="width: 200px;">Login</button> -->
+			<button id="check-sms-code-btn" onclick="authenticate(is_code_entry=true, is_new_code=false)" class="btn waves-effect waves-light sparco-blue" style="width: 200px;">Login</button>
+			<!-- <button id="create-new-code-btn" class="btn waves-effect waves-light sparco-blue" style="width: 300px; display: none;">Create A New Passcode</button> -->
+			<button id="create-new-code-btn" onclick="authenticate(is_code_entry=false, is_new_code=true)"  class="btn waves-effect waves-light sparco-blue" style="width: 300px; display: none;">Create A New Passcode</button>
+			<span style="margin: 10px 0; display: none">
+				Forgot Your Passcode?
+				<a id="reset-passcode-btn" href="#">Reset</a>.
+			</span>
+			
+		</div>
+	</div>
+	<div id="complete-profile-page" class="pages animated bounceInRight" style="display: none;">
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<a id="dismiss-complete-profile-page" href="#" style="display: none;"><i class="material-icons back-btn">keyboard_backspace</i></a>
+					<span>Profile</span>
+				</div>
+			</nav>
+		</div>
+		<div style="display: flex;align-items: center;justify-content: center;">
+			<img id="checking-profile-details-loader" style="display: block; margin-top: 10px;" src="./img/dloading.gif" height="40px">
+		</div>
+		<!-- <div id="complete-profile-wrap"> -->
+				<div class="input-field col s12">
+					<input value="" id="complete-profile-fname" type="text" class="validate">
+					<label class="active" for="complete-profile-fname">First Name</label>
+				</div>
+				<div class="input-field col s12">
+					<input value="" id="complete-profile-lname" type="text" class="validate">
+					<label class="active" for="complete-profile-lname">Last Name</label>
+				</div>
+				<div class="input-field col s12">
+					<input value="" id="complete-profile-email" type="email" class="validate" required>
+					<label class="active" for="complete-profile-email">Email</label>
+				</div>
+				<div class="input-field col s12">
+					<input type="text" placeholder="DD/MM/YYYY"  id="complete-profile-dob" required>
+					<label class="active" for="complete-profile-dob">Date of Birth</label>
+				</div>
+				<div class="input-field col s12">
+						<input id="complete-profile-sex" type="text" class="validate" required>
+						<label class="active" for="complete-profile-sex">Gender</label>
+				</div>
+				<div class="input-field col s12">
+					<input id="complete-profile-province" type="text" class="validate" required>
+					<label class="active" for="complete-profile-province">Province/State</label>
+				</div>
+				<div class="input-field col s12">
+					<input id="complete-profile-town" type="text" class="validate" required>
+					<label class="active" for="complete-profile-town">Town/District</label>
+				</div>
+				<div class="input-field col s12">
+					<input id="complete-profile-country" type="text" class="validate" required>
+					<label class="active" for="complete-profile-country">Country</label>
+				</div>
+				<button class="btn sparco-blue align-center sparco-center-btn complete-profile-btn">
+					Save
+				</button>	
+			</div>
+	</div>
+	<div id="home-page" class="page" style="display: none;">
+		<div class="navbar-fixed">
+			<nav style="background-color: #435794">
+				<div class="nav-wrapper">
+					<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+					<!-- <h6 class="brand-logo" style="font-size: 25px; color: white"> SPARCO</h6> -->
+				</div>
+			</nav>
+		</div>
+		<ul id="slide-out" class="sidenav">
+		<li>
+			<div class="user-view">
+			</div>
+		</li>
+		<!-- <li><a href="#!"><i class="material-icons">home</i>Home</a></li> -->
+		<!-- <li><a id="open-tx-page" href="#!"><i class="material-icons">list_alt</i>Transactions</a></li> -->
+		<li><a id="open-pm-page" href="#!"><i class="material-icons">credit_card</i>Payment Methods</a></li>
+		<li><a id="open-tx-page" href="#!"><i class="material-icons">history</i>Activity</a></li>
+		<li><a id="open-profile-page" href="#!"><i class="material-icons">account_box</i>Profile</a></li>
+		<!-- <li><a id="open-about-page" href="#!"><i class="material-icons">info</i>About Sparco</a></li> -->
+		<li><a id="open-support-page" href="#!"><i class="material-icons">contact_support</i>Support</a></li>
+		<!--
+		<li><a id="open-info-page" href="#!"><i class="material-icons">local_library</i>Terms Of Use</a></li>
+		<li><a id="open-info-page" href="#!"><i class="material-icons">lock</i>Privacy Policy</a></li>
+		<li><a id="open-info-page" href="#!"><i class="material-icons">mail</i>Contact Us</a></li>
+		-->
+		<li><a id="logout-btn" href="#!"><i class="material-icons">exit_to_app</i>Logout</a></li>
+		<li style="
+			bottom: 50px;
+			position: absolute;
+			margin-bottom: 10px;
+			width: 100%;
+		">
+			<span id="app-version" style="
+				display: block;
+				text-align: center;
+				font-size: 10px;
+			">
+				Sparco App Version 0.0.0
+			</span>
+		</li>
+		</ul>
+		<!--
+			<ul id="contacts_list" class="collection">
+			</ul>    
+		-->
+
+		<div id="scan_btn" onclick="do_scan()" class="btn btn-large waves-effect waves-light">
+			<svg style="width:24px;height:24px; margin: 5px;" viewBox="0 0 24 24">
+				<path fill="#FFFFFF" d="M4,4H10V10H4V4M20,4V10H14V4H20M14,15H16V13H14V11H16V13H18V11H20V13H18V15H20V18H18V20H16V18H13V20H11V16H14V15M16,15V18H18V15H16M4,20V14H10V20H4M6,6V8H8V6H6M16,6V8H18V6H16M6,16V18H8V16H6M4,11H6V13H4V11M9,11H13V15H11V13H9V11M11,6H13V10H11V6M2,2V6H0V2A2,2 0 0,1 2,0H6V2H2M22,0A2,2 0 0,1 24,2V6H22V2H18V0H22M2,18V22H6V24H2A2,2 0 0,1 0,22V18H2M22,22V18H24V22A2,2 0 0,1 22,24H18V22H22Z" />
+			</svg> 
+			Make Payment
+		</div>
+
+		<div id="service_tiles" class="container">
+			
+		<!-- <div id="service_tiles" class="container"> -->
+			<div class="service-title">
+				<h5>services</h5>
+			</div>
+			
+			<div class="service service-topup">
+				<i class="material-icons">phone_android</i>
+				<span>Mobile Top Up</span>
+			</div>
+			<div class="service service-tv">
+				<i class="material-icons">tv</i>
+				<span>TV Subscription</span>
+			</div>
+			<div class="service service-electricity">
+				<i class="material-icons">flash_on</i>
+				<span>Electricity</span>
+			</div>
+			<div class="service service-loans">
+				<i class="material-icons">monetization_on</i>
+				<span>Salary Advance</span>
+			</div>				
+			<div class="service service-data">
+				<i class="material-icons">import_export</i>
+				<span>Data</span>
+			</div> 
+			<div class="service service-transfers">
+				<i class="material-icons">compare_arrows</i>
+				<span>Money Transfers</span>
+			</div>
+			<!-- 				
+			<img id="mtn" src="img/services/mtn.png">
+			<img id="zamtel" src="img/services/zamtel.png">
+			<img id="zesco" src="img/services/zesco.png">
+			<img id="dstv" src="img/services/dstv.png">
+			<img id="gotv" src="img/services/gotv.png"> -->
+			<!-- 		
+			<img id="cliquid" src="img/services/cliquid2.png">
+			<img id="vodafone" src="img/services/vodafone2.png">
+			<img id="topstar" src="img/services/topstar2.png"> -->
+
+		</div>
+
+
+	</div>
+
+	<div id="contacts-page" class="pages" style="display: none;">
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<a id="dismiss-contacts-page" href="#"><i class="material-icons back-btn">keyboard_backspace</i></a>
+					<span id="contacts-page-heading"></span>
+				</div>
+			</nav>
+		</div>
+		<!-- <ul class="tabs tabs-fixed-width tab-demo z-depth-1">
+			<li class="tab"><a class="active" href="#dialpad-tab">Dialpad</a></li>
+			<li class="tab"><a href="#phone-contacts-tab">Phonebook</a></li>
+		</ul> -->
+		<div id="dialpad-tab" class="col s12">
+
+			<!-- <button class="waves-effect waves-light btn-flat sparco-blue sparco-center-btn white-text" style="margin-top: 5px;"><i class="material-icons left">contacts</i>phonebook</button> -->
+
+			<div id="dialpad-inner-wrap">
+					<!-- TOP UP REF -->
+					<!-- <div id="dialpad-tab-name-input-wrapper" class="input-field col s12 animated fadeIn slow"  style="display: none;">
+						<input value="" id="dialpad-tab-name" type="text" class="validate">
+						<label class="active" for="dialpad-tab-name">Recipient's Name</label>
+					</div>
+					<div id="dialpad-tab-topup-num-input-wrapper" class="input-field col s12 animated fadeIn slow">
+						<input value="" id="dialpad-tab-topup-num" type="tel" class="validate">
+						<label class="active" for="dialpad-tab-topup-num">Recipient's Phone Number</label>
+						<button id="get-contact-btn" class="waves-effect waves-light btn-flat sparco-blue white-text" style="position: absolute; top: 5px; right: 0;"><i class="material-icons">contacts</i></button>
+					</div>
+					<div id="dialpad-tab-topup-amount-input-wrapper" class="input-field col s12 animated fadeIn slow" style="display: none;">
+						<input value="" id="dialpad-tab-topup-amount" type="number" class="validate">
+						<label class="active" for="dialpad-tab-topup-amount">Enter Amount(ZMW)</label>
+					</div>
+					<div class="col s12 select-funding-source btn-flat animated fadeIn slow" style="border-bottom: 1px solid #9e9e9e; margin-bottom: 10px; padding: 10px; height: 46px; width: 100%; display: none;">
+						<span style="color: #9e9e9e;">
+							Select Funding Source
+						</span>
+						<i class="material-icons right">arrow_drop_down</i>
+					</div>			
+					<button class="btn sparco-blue align-center sparco-center-btn dial-pad-topup-checkout-v2-btn animated fadeIn slow">
+						Proceed
+						<i class="material-icons right">arrow_forward</i>
+					</button>	 -->
+					
+					<!-- MONEY TRANSFER REF -->
+					<div id="dialpad-tab-name-input-wrapper" class="input-field col s12 animated fadeIn slow"  style="display: none;">
+							<input value="" id="dialpad-tab-name" type="text" class="validate">
+							<label class="active" for="dialpad-tab-name">Recipient's Name</label>
+						</div>
+						<div id="dialpad-tab-transfer-num-input-wrapper" class="input-field col s12 animated fadeIn slow">
+							<input value="" id="dialpad-tab-transfer-num" type="tel" class="validate">
+							<label class="active" for="dialpad-tab-transfer-num">Recipient's Number</label>
+							<button onclick="getContact()" id="get-contact-btn" class="waves-effect waves-light btn-flat sparco-blue white-text" style="position: absolute; top: 5px; right: 0;"><i class="material-icons">contacts</i></button>
+						</div>
+						<div id="dialpad-tab-transfer-amount-input-wrapper" class="input-field col s12 animated fadeIn slow" style="display: none;">
+							<input value="" id="dialpad-tab-transfer-amount" type="number" class="validate">
+							<label class="active" for="dialpad-tab-transfer-amount">Enter Amount(ZMW)</label>
+						</div>
+						<div class="col s12 select-funding-source btn-flat animated fadeIn slow" style="border-bottom: 1px solid #9e9e9e; margin-bottom: 10px; padding: 10px; height: 46px; width: 100%; display: none;">
+							<span style="color: #9e9e9e;">
+								Select Payment Method
+							</span>
+							<i class="material-icons right">arrow_drop_down</i>
+						</div>
+	
+						<button class="btn sparco-blue align-center sparco-center-btn dial-pad-transfer-checkout-btn">
+							Proceed
+							<i class="material-icons right">arrow_forward</i>
+						</button>	
+						<div style="margin: 10px; text-align: center">
+							Please note that you can only make transfers from bank cards and MTN Money accounts to MTN Money accounts at the moment.
+						</div>	
+			</div>
+		</div>
+		<!-- 		
+			<div id="phone-contacts-tab" class="col s12" style="overflow: auto; height: calc(100vh - 105px);">
+				<div style="display: flex;align-items: center;justify-content: center;">
+					<img id="phone-contacts-tab-loader" style="display: none; margin-top: 10px;" src="./img/dloading.gif" height="40px">
+				</div>
+				<div class="contacts-error-wrap"  style="display: none">
+					<span>Unable to display phone contacts.</span>
+				</div>
+				<ul id="contacts_list" class="collection" style="border: none;">
+				</ul> 
+			</div> 
+		-->
+	</div>
+
+	<div id="loans-page-v2" class="pages" style="display: none">
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<a id="dismiss-loans-page-v2" href="#"><i class="material-icons back-btn">keyboard_backspace</i></a>
+					<span id="loans-page-v2-heading">Get Salary Advance</span>
+				</div>
+			</nav>
+		</div>
+		<div id="loans-v2-dialpad-tab" class="col s12">
+			<div id="loans-v2-info-wrap"  style="padding: 0 10px;">
+				<p  id="loans-v2-info" class="center-align"></p>
+			</div>
+			<div id="loans-v2-dialpad-inner-wrap" style="padding: 10px;">
+				<div id="dialpad-tab-loans-v2-input-wrapper" class="input-field col s12 animated fadeIn slow">
+					<input value="" id="dialpad-tab-loans-v2" type="tel" class="validate">
+					<label class="active" for="dialpad-tab-loans-v2">Phone Number</label>
+					<button disabled id="get-contact-loans-v2-btn" class="waves-effect waves-light btn-flat sparco-blue white-text" style="position: absolute; top: 5px; right: 0;"><i class="material-icons">contacts</i></button>
+				</div>
+				<div id="amount-loans-v2-input-wrapper" class="input-field col s12 animated fadeIn slow">
+						<input value="" id="amount-loans-v2" type="text" class="validate">
+						<label class="active" for="amount-loans-v2">Enter Amount</label>
+				</div>
+				<button class="btn sparco-blue align-center sparco-center-btn loan-v2-checkout-btn">
+						Proceed
+						<i class="material-icons right">arrow_forward</i>
+				</button>	
+			</div>
+		</div>
+	</div>
+
+	<div id="loaner-details-page" class="pages" style="display: none;">
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<a id="dismiss-loaner-details-page" href="#"><i class="material-icons back-btn">keyboard_backspace</i></a>
+					<span id="loaner-details-page-heading"></span>
+				</div>
+			</nav>
+		</div>
+
+		<div id="-loan-dialpad-tab" class="col s12">
+
+			<div id="loan-dialpad-inner-wrap">
+
+				<div id="dialpad-tab-loan-num-input-wrapper" class="input-field col s12 animated fadeIn slow">
+					<i class="material-icons prefix">phone</i>
+					<input value="" id="dialpad-tab-loan-num" type="tel" class="validate">
+					<label class="active" for="dialpad-tab-loan-num">MTN Money Number</label>
+				</div>
+				<div id="dialpad-tab-loan-amount-input-wrapper" class="input-field col s12 animated fadeIn slow" style="display: none;">
+					<i class="material-icons prefix">money</i>
+					<input value="" id="dialpad-tab-loan-amount" type="number" class="validate">
+					<label class="active" for="dialpad-tab-loan-amount">Enter Amount(ZMW)</label>
+				</div>
+
+				<button class="btn sparco-blue align-center sparco-center-btn dial-pad-loan-checkout-btn">
+					Proceed
+					<i class="material-icons right">arrow_forward</i>
+				</button>	
+				<div style="margin: 10px; text-align: center">
+					Please note that only MTN Money accounts can use the feature at the moment.
+				</div>	
+			</div>
+		</div>
+
+	</div>
+
+	<div id="pm-page" class="pages" style="display: none;">
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<a id="dismiss-pm-page" href="#"><i class="material-icons back-btn">keyboard_backspace</i></a>
+					<span>Payment Methods</span>
+				</div>
+			</nav>
+		</div>
+		<div style="display: flex;align-items: center;justify-content: center;">
+			<img id="pm-page-loader" style="display: block; margin-top: 10px;" src="./img/dloading.gif" height="40px">
+		</div>
+		<div id="pm-list-wrap">
+			
+		</div>
+	</div>
+
+	<div id="tx-page" class="pages" style="display: none;">
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<a id="dismiss-tx-page" href="#"><i class="material-icons back-btn">keyboard_backspace</i></a>
+					<span>Activity</span>
+				</div>
+			</nav>
+		</div>
+		<div style="display: flex;align-items: center;justify-content: center;">
+			<img id="tx-page-loader" style="display: block; margin-top: 10px;" src="./img/dloading.gif" height="40px">
+		</div>
+		<!-- <ul id="transactions" class="collection" style="border: none;">
+
+		</ul> -->
+		<ul id="activities" class="collection" style="border: none;">
+
+		</ul>
+	</div>
+	
+	<div id="profile-page" class="pages" style="display: none;">
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<a id="dismiss-profile-page" href="#"><i class="material-icons back-btn">keyboard_backspace</i></a>
+					<span>Profile</span>
+				</div>
+			</nav>
+		</div>
+		
+		<div style="display: flex;align-items: center;justify-content: center;">
+			<img id="checking-user-details-loader" style="display: block; margin-top: 10px;" src="./img/dloading.gif" height="40px">
+		</div>
+		
+
+		<div id="user-info-wrap">
+
+			<div id="inner-user-info-wrap">
+
+				<!-- <div class="user-value-title-wrap">
+					<span class="user-value-title">
+						<span class="user-title">Pass Code</span> 
+						<span id="user-pw" class="user-value">****</span>
+					</span>
+					<i id="edit-user-pw" class="material-icons">edit</i>
+				</div> -->
+			</div>
+
+		</div>
+	</div>
+
+	<div id="about-page" class="pages" style="display: none;">
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<a id="dismiss-about-page" href="#"><i class="material-icons back-btn">keyboard_backspace</i></a>
+					<span>About</span>
+				</div>
+			</nav>
+		</div>
+		<div style="display: flex;flex-direction: column;align-items: center;">
+			<a href="#">Privacy policy</a>
+			<!-- <a href="#">Terms and Conditions</a> -->
+			<!-- <a href="#">Privacy policy</a>		 -->
+
+			<!-- <button id="test-contact-picker-btn" class="btn" style="margin: 10px;">test contacts picker</button> -->
+		</div>
+
+	</div>
+
+
+
+	<div id="addr-auth-page" class="modal" style="display: none;">
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<a id="dismiss-addr-auth-page" href="#"><i class="material-icons back-btn">keyboard_backspace</i></a>
+				</div>
+			</nav>
+		</div>
+		<div id="addr-auth-page-inner-wrap" style="overflow: auto; height: calc(100vh - 105px); padding: 10px;">
+			<h6>Enter Your Address to complete transaction</h6>
+			<input id="billingaddress-input" type="text" class="validate" placeholder="Enter Your Address" value="">
+			<input id="billingcity-input" type="text" class="validate" placeholder="Enter Your City" value="">
+			<input id="billingstate-input" type="text" class="validate" placeholder="Enter Your State/Province" value="">
+			<input id="billingcountry-input" type="text" class="validate" placeholder="Enter Your Country" value="">
+			<input id="billingzip-input" type="text" class="validate" placeholder="Enter Your Zip Code" value="">
+			<input id="authtype-input" type="hidden" class="validate" value="">
+			<input id="addr-topup-id-input" type="hidden" class="validate" value="">
+			<input id="savepm-input" type="hidden" class="validate" value="">
+			<!-- <input id="modalservice-service-input" type="hidden" value="${service}"> -->
+			<button id="addr-auth-btn" class="btn waves-effect waves-light sparco-center-btn sparco-blue">proceed
+				<i class="material-icons right">arrow_forward</i>
+			</button>
+
+		</div>
+	</div>
+
+	<!-- Electricity Page -->
+	<div id="electricity-topup-page" class="pages" style="display: none;">
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<a id="dismiss-electricity-topup-page" href="#"><i class="material-icons back-btn">keyboard_backspace</i></a>
+					<span>Zesco Tokens</span>
+				</div>
+			</nav>
+		</div>
+		<div id="electricity-topup-page-inner-wrap" style="overflow: auto; height: calc(100vh - 105px); padding: 10px;">
+
+			<input id="zesco-meter-number-input" type="number" class="validate" placeholder="Enter Your Meter Number" value="">
+			<input id="zesco-amount-input" type="number" class="validate" placeholder="Enter Amount(Min 30)" value="">
+			<input id="modalservice-service-input" type="hidden" value="">
+			<div class="col s12 select-funding-source btn-flat" style="border-bottom: 1px solid #9e9e9e; margin-bottom: 10px; padding: 10px; width: 100%; height: 66px;">
+				<span style="color: #9e9e9e;">
+					Select Payment Method
+				</span>
+				<i class="material-icons right">arrow_drop_down</i>
+			</div>	
+			<button onclick="electricityCheckOut()" id="meter-number-btn" class="btn waves-effect waves-light sparco-center-btn sparco-blue">proceed
+				<i class="material-icons right">arrow_forward</i>
+			</button>
+
+		</div>
+	</div>
+	<!-- TV TopUp Page -->
+	<div id="tv-topup-page" class="pages" style="display: none;">
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<a id="dismiss-tv-topup-page" href="#"><i class="material-icons back-btn">keyboard_backspace</i></a>
+					<span>TV TopUp</span>
+				</div>
+			</nav>
+		</div>
+		<div id="tv-topup-page-inner-wrap" style="overflow: auto; height: calc(100vh - 105px); padding: 10px;">
+            <input id="smart-card-number-input" type="number" class="validate" placeholder="Enter Smart Card Number">
+            <input id="tv-amount-due-input" type="text" value="">
+            <input id="tv-service-input" type="hidden" value="">
+            <div id="tv-loading-wrap"></div>
+			<div id="tv-modal-select-funding-source" class="col s12 select-funding-source btn-flat" style="border-bottom: 1px solid #9e9e9e; margin-bottom: 10px; padding: 10px; height: 66px; width: 100%;">
+				<span style="color: #9e9e9e;">
+					Select Payment Method
+				</span>
+				<i class="material-icons right">arrow_drop_down</i>
+			</div>	
+            <button id="check-tv-balance-btn" class="btn sparco-blue sparco-center-btn">check balance
+                <i class="material-icons right">arrow_forward</i>
+            </button>
+            <button id="smart-card-number-btn" class="btn sparco-blue sparco-center-btn">proceed
+                <i class="material-icons right">arrow_forward</i>
+            </button>
+		</div>
+	</div>
+	<div id="auth-page" class="pages" style="display: none;">
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<a id="dismiss-auth-page" class="left" href="#"><i class="material-icons back-btn">keyboard_backspace</i></a>
+					<a href="#" class="left">Auth Page</a>
+				</div>
+			</nav>
+		</div>
+		<iframe src="" width="100%" height="100%"  border=0 noresize frameborder="0" >
+
+		</iframe>
+	</div>
+
+	<div id="tests-page" class="pages" style="display: none;">
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<a id="dismiss-tests-page" class="left" href="#"><i class="material-icons back-btn">keyboard_backspace</i></a>
+					<a href="#" class="left">Tests Page</a>
+				</div>
+			</nav>
+		</div>
+		<div style="overflow: auto; height: calc(100vh - 105px); padding: 10px;">
+			<button id="test-browser-btn" class="btn">Open Browser</button>
+		</div>
+
+	</div>
+
+	<div id="add-card-page" class="pages" style="display: none;">
+		<!-- <div id="add-card-page" class="modal" style="display: none;"> -->
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<a id="dismiss-add-card-page" href="#"><i class="material-icons back-btn">keyboard_backspace</i></a>
+				</div>
+			</nav>
+		</div>
+		<!-- <div id="add-card-inner-wrap" style="overflow: auto; height: calc(100vh - 105px);">
+			<div class="card-out-wrap" style="display: flex;justify-content: center;">
+				<div class="card-wrapper"></div>
+			</div>
+			<div class="form-container active">
+				<form id="cc-form" action="">
+					<input id="cc-num" placeholder="Card number" type="tel" name="number" value="">
+					<input id="cc-name" placeholder="Full name" type="text" name="name" value="">
+					<input id="cc-expiry" placeholder="MM/YY" type="tel" name="expiry" value="">
+					<input id="cvc" placeholder="CVC" type="number" name="cvc" value="">
+					<button class="btn sparco-blue sparco-center-btn add-card-btn">
+						proceed
+					</button>
+				</form>
+			</div>
+		</div> -->
+		<iframe src="https://sparco.io/ccform" width="100%" height="100%"  border=0 noresize frameborder="0" ></iframe>
+		
+	</div>
+
+	<!-- <div id="loan-v2-history-page" class="pages" style="display: none;">
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<a id="dismiss-tests-page" class="left" href="#"><i class="material-icons back-btn">keyboard_backspace</i></a>
+					<a href="#" class="left">Tests Page</a>
+				</div>
+			</nav>
+		</div>
+		<div style="overflow: auto; height: calc(100vh - 105px); padding: 10px;">
+			<button id="test-browser-btn" class="btn">Open Browser</button>
+		</div>
+
+	</div> -->
+	<div id="add-mtn-money-modal" class="modal">
+		<div class="modal-content">
+			<input id="mtn-money-number-input" placeholder="MTN Money Number" type="tel" name="number">
+			<button class="btn sparco-blue sparco-center-btn add-momo-btn">
+				proceed
+			</button>
+		</div>
+	</div>
+
+	
+	<div id="top-up-modal" class="modal">
+		<div class="modal-content">
+
+		</div>
+	</div>
+	
+
+	<div id="loan-loader" class="modal">
+		<div class="modal-content">
+			<div id="loan-service-wrap">
+				<p style="text-align: center">Please Wait</p>
+				<img id="pm-page-loader" 
+					style="display: block; margin-top: 10px; margin-right: auto; margin-left: auto; width: 40px"
+					src="./img/dloading.gif" height="40px">
+			</div>
+		</div>
+	</div>
+
+	<div id="loan-v2-modal" class="modal">
+			<div class="modal-content">
+				<div id="loan-v2-modal-inner-wrap">
+					<p id="loan-v2-modal-info" style="text-align: center">Please Wait</p>
+					<img id="loan-v2-modal-loader-img" 
+						style="display: block; margin-top: 10px; margin-right: auto; margin-left: auto; width: 40px"
+						src="./img/dloading.gif" height="40px">
+				</div>
+			</div>
+	</div>
+
+	<!-- Loan Modal -->
+	<div id="confirm-loan-modal" class="modal">
+		<div class="modal-content">
+            <div id="status-info-wrap">
+                <div id="inner-loan-status-info-wrap">
+
+                </div>
+            </div>
+		</div>	
+	</div>
+
+	<!-- Transfer Modal -->
+	<div id="confirm-transfer-modal" class="modal">
+		<div class="modal-content">
+            <div id="transfer-info-wrap">
+                <div id="inner-transfer-info-wrap">
+					<p id="loan-v2-modal-info" style="text-align: center">Please Wait.....</p>
+					<img id="loan-v2-modal-loader-img" 
+						style="display: block; margin-top: 10px; margin-right: auto; margin-left: auto; width: 40px"
+						src="./img/dloading.gif" height="40px">
+                </div>
+            </div>
+		</div>	
+	</div>
+
+	<!-- ineligibale for loan Modal -->
+	<div id="pending-loan-modal" class="modal">
+		<div class="modal-content">
+            <div id="status-info-wrap">
+                <div id="inner-status-info-wrap">
+                    <h5>Denied</h5>
+					<p style="text-align: center" id='pending-status-msg'></p>
+					<!-- <div class="row">
+						<div class="col s3">
+							<button id="confirm-loan-btn" type="button" class="btn btn-success">Proceed</button>
+						</div>
+						<div class="col s3"></div>
+						<div class="col s3">
+							<button id="cancel-loan-btn" type="button" class="btn red darken">Cancel</button>
+						</div>
+					</div> -->
+                </div>
+            </div>
+		</div>	
+	</div>
+
+	<div id="data-modal" class="modal">
+		<div class="modal-content">
+			<div id="data-service-wrap">
+				<h6 id="data-service-heading">Select The Data Service</h6>
+				<div id="liquiddata-topup" class="data-service" ></div>
+				<!-- <div id="vodafonedata-topup" class="data-service" ></div> -->
+				<div id="mtndata-topup" class="data-service" ></div>
+			</div>
+		</div>
+	</div>
+
+	
+	<div id="tv-modal" class="modal">
+		<div class="modal-content">
+			<div id="tv-service-wrap">
+				<h6 id="tv-service-heading">Select Your TV Service</h6>
+				<div id="dstv-topup" class="tv-service" ></div>
+				<div id="gotv-topup" class="tv-service" ></div>
+			</div>
+		</div>
+	</div>
+	
+<!--
+	<div id="tv-top-up-modal" class="modal" data-modal-name="tv-top-up-modal">
+		<div class="modal-content">
+            <input id="smart-card-number-input" type="number" class="validate" placeholder="Enter Smart Card Number">
+            <input id="tv-amount-due-input" type="text" value="">
+            <input id="tv-service-input" type="hidden" value="">
+            <div id="tv-loading-wrap"></div>
+			<div id="tv-modal-select-funding-source" class="col s12 select-funding-source" style="border-bottom: 1px solid #9e9e9e; margin-bottom: 10px; padding: 10px;">
+				<span style="color: #9e9e9e;">
+					Select Funding Source
+				</span>
+				<i class="material-icons right">arrow_drop_down</i>
+			</div>	
+            <button id="check-tv-balance-btn" class="btn sparco-blue sparco-center-btn">check balance
+                <i class="material-icons right">arrow_forward</i>
+            </button>
+            <button id="smart-card-number-btn" class="btn sparco-blue sparco-center-btn">proceed
+                <i class="material-icons right">arrow_forward</i>
+            </button>
+		</div>
+	</div>
+-->
+<!--
+	<div id="electricity-modal" class="modal">
+		<div class="modal-content">
+			<input id="zesco-meter-number-input" type="number" class="validate" placeholder="Enter Your Meter Number" value="">
+			<input id="zesco-amount-input" type="number" class="validate" placeholder="Enter Amount(Min 30)" value="">
+			<input id="modalservice-service-input" type="hidden" value="">
+			<div class="col s12 select-funding-source" style="border-bottom: 1px solid #9e9e9e; margin-bottom: 10px; padding: 10px;">
+				<span style="color: #9e9e9e;">
+					Select Funding Source
+				</span>
+				<i class="material-icons right">arrow_drop_down</i>
+			</div>	
+			<button onclick="electricityCheckOut()" id="meter-number-btn" class="btn waves-effect waves-light sparco-center-btn sparco-blue">proceed
+				<i class="material-icons right">arrow_forward</i>
+			</button>
+		</div>
+	</div>
+-->
+	<div id="funding-source-modal" class="modal bottom-sheet">
+		<div class="modal-content">
+			<h6>Payment Methods</h6>
+			<ul id="saved-pm-list" class="collection" style="border: none;">
+				<div style="text-align: center;">Loading...</div>
+				<!-- <li data-pm-id="1" class="collection-item payment-method">Visa ****3434</li> -->
+				<!-- <li data-pm-id="2" class="collection-item payment-method">Mastercard ****8765</li> -->
+				<!-- <li data-pm-id="3" class="collection-item payment-method">MTN 0961453688</li> -->
+				<!-- <li id="add-new-pm" class="collection-item">+ Add/Use New Payment Method</li> -->
+			</ul>		
+            <button class="btn sparco-blue sparco-center-btn add-pm-btn">
+                Use New Payment Method
+                <i class="material-icons left">add</i>
+            </button>
+		</div>
+	</div>
+
+	<div id="data-bundles-modal" class="modal bottom-sheet">
+		<div class="modal-content">
+			<h6 class="center-align">Data Bundles</h6>
+			<ul id="data-bundles-list" class="collection" style="border: none;">
+				<div style="text-align: center;">Loading...</div>
+				<!-- <li data-value="2" class="collection-item data-bundle-option">ZMW 2 <span class="blue-text text-darken-2">20MB(Daily)</span></li> -->
+				<!-- <li data-value="5" class="collection-item data-bundle-option">ZMW 5 <span class="blue-text text-darken-2">100MB(Daily)</span></li> -->
+				<!-- <li data-value="7" class="collection-item data-bundle-option">ZMW 7 <span class="blue-text text-darken-2">300MB(Daily)</span></li> -->
+				<!-- <li data-pm-id="2" class="collection-item payment-method">Mastercard ****8765</li> -->
+				<!-- <li data-pm-id="3" class="collection-item payment-method">MTN 0961453688</li> -->
+				<!-- <li id="add-new-pm" class="collection-item">+ Add/Use New Payment Method</li> -->
+			</ul>	
+			<!--	
+            <button class="btn sparco-blue sparco-center-btn add-pm-btn">
+                Use New Payment Method
+                <i class="material-icons left">add</i>
+			</button>
+			-->
+		</div>
+	</div>
+	<div id="pm-type-modal" class="modal bottom-sheet">
+		<div class="modal-content">
+			<div id="pm-wrap">
+				<h6 id="pm-heading">Select Payment Method:</h6>
+				<div id="add-card-pm" class="pm-type" ></div>
+				<div id="add-mtn-pm" class="pm-type" ></div>
+				<div id="add-zamtel-pm" class="pm-type" ></div>
+				<div id="add-airtel-pm" class="pm-type" ></div>
+				<div id="add-mpesa-pm" class="pm-type" ></div>
+			</div>
+		</div>	
+	</div>
+
+	<div id="tx-status-modal" class="modal">
+		<div class="modal-content">
+            <div id="status-info-wrap">
+                <div id="inner-status-info-wrap">
+                    <div class="circle-loader">
+                      <!-- <div class="checkmark draw"></div> -->
+                      <!-- <div class="status-cross"></div> -->
+                      <div id="inner-loader" class="draw"></div>
+                    </div>
+                    <h5 id="payment-status">Processing Payment</h5>
+                    <h5 id="order-status">Processing Top Up</h5>
+                    <div id='payment-status-msg'>
+
+                    </div>
+                    <!--
+                    <div id="order-pin">
+                        <h6>Zesco Token</h6>
+                        <p>0987654321</p>
+                    </div>
+                    -->
+                    <!-- <p><button id="dismiss-success-fail-page-btn" type="button" class="btn btn-success">Dismiss</button></p> -->
+                </div>
+            </div>
+		</div>	
+	</div>
+
+	<div id="user-details-modal" class="modal">
+		<div class="modal-content">
+			
+		</div>
+	</div>
+
+	<div id="coming-soon-modal" class="modal">
+		<div class="modal-content">
+			<h6 class="center">Feature Coming Soon.</h6>
+		</div>
+	</div>
+	<div id="transfers-loader-modal" class="modal">
+		<div class="modal-content">
+			<div id="loan-service-wrap">
+				<p style="text-align: center">Please Wait</p>
+				<img id="pm-page-loader" 
+					style="display: block; margin-top: 10px; margin-right: auto; margin-left: auto; width: 40px"
+					src="./img/dloading.gif" height="40px">
+			</div>
+		</div>
+	</div>
+
+	<div id="support-modal" class="modal">
+		<div class="modal-content">
+			<h6 class="center" style=" margin: 20px">Contact Us For Support.</h6>
+			<button class="btn btn-flat support-contact-btn" data-link="tel:+260975687373" style="text-align: center; margin: 0px auto; display: block;height: 24px;	line-height: 14px;" ><i class="material-icons left">local_phone</i>+260975687373</button>
+			<button class="btn btn-flat support-contact-btn" data-link="mailto:support@broadpay.co.zm" style="text-align: center; margin: 0px auto; display: block; text-transform: lowercase; height: 24px;	line-height: 14px;" ><i class="material-icons left">mail</i>support@broadpay.co.zm</button>
+		</div>
+	</div>	
+
+	<div id="error-modal" class="modal">
+		<div class="modal-content">
+			<h6 id="err-modal-heading" class="center" style="font-weight: bold;
+		">Error Processing Payment</h6>
+			<p id="err-modal-msg" style="text-align: center; color: red">Bank card failed</p>
+
+			<span style="text-align: center; display: block;">Contact Us For Support:</span>
+			<button class="btn-small btn-flat support-contact-btn" data-link="tel:+260975687373" style="text-align: center; display: block; padding: 0; margin: 0 auto;height: 30px;" ><i class="material-icons left">local_phone</i>+260975687373</button>
+			<button class="btn-small btn-flat support-contact-btn" data-link="mailto:support@broadpay.co.zm" style="text-align: center;  display: block; text-transform: lowercase; padding: 0; margin: 0 auto;height: 30px;" ><i class="material-icons left">mail</i>support@broadpay.co.zm</button>
+		</div>
+	</div>
+	<div id="tx-modal" class="modal">
+		<div class="modal-content">
+			<h6 id="tx-modal-heading" class="center" style="font-weight: bold; display: none;
+		">Transaction Summary</h6>
+			<div id="tx-modal-details">
+				<!--
+				<span id="tx-modal-datetime">25 Aug, 2019 14:00</span>
+				<h5 id="tx-modal-title">MTN Direct TopUp</h5>
+				<span id="tx-modal-destination-header">Recipient</span>
+				<h6 id="tx-modal-destination"  style=" margin-top: 0;">0961453688</h6>
+				<span id="tx-modal-token-header">Zesco Token</span>
+				<h6 id="tx-modal-token" style=" margin-top: 0;">00098298298928989</h6>
+				<h5 id="tx-modal-amount">ZMW 10</h5>
+				<p id="tx-modal-debit-status">Payment Status: Processed <i class="material-icons" style="vertical-align: middle;
+font-size: 15px; color: #8f8f8f;">check_circle</i></p>
+				<p id="tx-modal-credit-status">TopUp Status: Processed <i class="material-icons" style="vertical-align: middle;
+					font-size: 15px; color: #8f8f8f;">cancel</i></p>
+				-->
+
+				<span id="tx-modal-datetime">25 Aug, 2019 14:00</span>
+				<h5 id="tx-modal-title">Pay Day Loan</h5>
+				<span id="tx-modal-token-header">Principle Amount</span>
+				<h6 id="tx-modal-token" style=" margin-top: 0;">ZMW 1000</h6>
+				<span id="tx-modal-header">Loan Amount</span>
+				<h5 id="tx-modal-amount" style="padding: 0;margin:0;">ZMW 1300</h5>
+				<span>Due Date</span>
+				<h6 style=" margin-top: 0; font-weight: bold;">30 Sept, 2019</h6>
+				<p id="tx-modal-debit-status">Credit Status: Processed <i class="material-icons" style="vertical-align: middle;
+				font-size: 15px; color: #8f8f8f;">check_circle</i></p>
+				<p id="tx-modal-credit-status">Repayment Status: Pending <i class="material-icons" style="vertical-align: middle;
+					font-size: 15px; color: #8f8f8f;">cancel</i></p>
+
+			</div>
+
+			<!--
+			<span style="text-align: center; display: block;">Contact Us For Support:</span>
+			<button class="btn-small btn-flat support-contact-btn" data-link="tel:+260975687373" style="text-align: center; display: block; padding: 0; margin: 0 auto;height: 30px;" ><i class="material-icons left">local_phone</i>+260975687373</button>
+			<button class="btn-small btn-flat support-contact-btn" data-link="mailto:support@broadpay.co.zm" style="text-align: center;  display: block; text-transform: lowercase; padding: 0; margin: 0 auto;height: 30px;" ><i class="material-icons left">mail</i>support@broadpay.co.zm</button>
+			-->
+		</div>
+	</div>	
+	<!--
+		<div id="card-details-modal" class="modal">
+			<div class="modal-content">
+				<div id="add-card-inner-wrap">
+					<div class="card-out-wrap" style="display: flex;justify-content: center;">
+						<div class="card-wrapper"></div>
+					</div>
+			        <div class="form-container active">
+			            <form action="">
+			                <input placeholder="Card number" type="tel" name="number">
+			                <input placeholder="Full name" type="text" name="name">
+			                <input placeholder="MM/YY" type="tel" name="expiry">
+			                <input placeholder="CVC" type="number" name="cvc">
+			            </form>
+			        </div>
+			    </div>
+			</div>	
+		</div>
+	-->
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="js/materialize.min.js"></script>
+	<!-- <script type="text/javascript" src="js/index.js"></script> -->
+	<!-- <script type="text/javascript" src="res/dist/jquery.card.js"></script> -->
+	<!-- <script type="text/javascript" src="res/dist/card.js"></script> -->
+	<script src="js/app.js"></script>
+	<script src="js/utils.js"></script>
+	<script src="js/intlTelInput.js"></script>
+	<script src="js/jquery-pincode-autotab.min.js"></script>
+	<script src="js/moment.js"></script>
+	<!-- <script src="js/tests.js"></script> -->
+
+	<script>
+		$(document).ready(function(){
+
+			$(".pin-code-wrap input").jqueryPincodeAutotab({
+				prevElement: null,
+				nextElement: null,
+				defaultFlow: true
+			});
+
+			$('#open-pm-page').on('click', function(){
+				let sidenav = document.querySelector('.sidenav');
+				
+				let instance = M.Sidenav.getInstance(sidenav);
+				instance.close();
+				$('#pm-list-wrap').empty()
+				$('#pm-page-loader').css({'display':'block'})
+
+				$('#pm-page').fadeIn();
+
+			    $.get(`${SERVER_URL}/get-saved-cards.php?token=${localStorage.getItem("jwt")}`, function(payment_methods) {
+
+			    	$('#pm-page-loader').css({'display':'none'})
+
+			        // console.log(payment_methods);
+			        payment_methods.forEach((payment_method)=>{
+			                // console.log(card)
+			                let payment_method_id = payment_method['id'];
+							let payment_method_logo, payment_method_name, payment_method_number = '';
+							
+
+			                if (payment_method['payment_method'] == 'card') {
+			                    payment_method_logo = `${payment_method['card_type'].toLowerCase()}_logo.png`;
+			                    payment_method_number = `&#8226;&#8226;&#8226;&#8226;${payment_method['ldigits']}`;
+			                    payment_method_name = `${payment_method['card_type'].toLowerCase()}`; 
+			                }
+			                if (payment_method['payment_method'] == 'mtn_money') {
+			                // if ((payment_method['payment_method'] == 'mtn_money') && (service_type != 'money_transfer')) {
+			                    payment_method_logo = `${payment_method['payment_method']}_logo.png`;
+			                    payment_method_number = `${payment_method['phone']}`;
+			                    payment_method_name = `${payment_method['payment_method'].replace('_', ' ').toLowerCase()}`; 
+							}
+
+			                $('#pm-list-wrap').append(`
+			                    <div class="cards-wrap">
+			                        <div class="payment-method-wrap" data-payment-method-id="${payment_method_id}">
+			                            <div class="payment-method-img-wrap">
+			                                <img class="payment-method-img" src="./img/payment_methods/${payment_method_logo}">
+			                            </div>
+			                            <div class="payment-method-text-wrap">
+			                                <h6 style="margin: 0; color: #039be5;text-transform: capitalize; text-align: left;">${payment_method_name}</h6>
+			                                <span style="margin: 0; color: #039be5;">${payment_method_number}</span>
+			                            </div>
+			                            <div class="remove-payment-method-wrap" data-payment-method-id="${payment_method_id}">
+			                                <i class="large material-icons">close</i>
+			                            </div>
+			                        </div>
+			                    </div>
+			                    `)      
+			            }
+			        )
+			    })
+
+			})
+
+			$('#dismiss-pm-page').on('click', function(){
+				$('#pm-page').fadeOut();
+			})
+
+			$('#dismiss-complete-profile-page').on('click', function(){
+				$('#complete-profile-page').fadeOut();
+			})
+
+			$('#dismiss-tests-page').on('click', function(){
+				$('#tests-page').fadeOut();
+			})
+
+			$('#dismiss-loans-page-v2').on('click', function(){
+				$('#loans-page-v2').fadeOut();
+			})
+
+			$('#open-tx-page').on('click', function(){
+				$('#activities').empty()
+				let sidenav = document.querySelector('.sidenav');
+				
+				let instance = M.Sidenav.getInstance(sidenav);
+				instance.close();
+
+				$('#tx-page-loader').css({'display':'block'})
+
+				$('#tx-page').fadeIn();
+				/*
+				$.get(`${SERVER_URL}/activity-info.php?token=${localStorage.jwt}`, function(transactions){
+					// console.log(transactions);
+					$('#tx-page-loader').css({'display':'none'})
+					
+					transactions.forEach(function(transaction){
+						let {id:id, datetime: server_time, service: service_name, topupnumber: topupnumber, topupcode: code, amount: amount} = transaction;
+						let tx_service = '';
+						let tx_token = '';
+						if (service_name == 'zesco') {
+							tx_service = 'Meter Number: ';
+							tx_token = code;
+						}
+						if ((service_name == 'mtn') || (service_name == 'airtel') || (service_name == 'zamtel')) {
+							tx_service = `${service_name.toUpperCase()} Number: `;
+						}
+						if ((service_name == 'gotv') || (service_name == 'dstv')) {
+							tx_service = `${service_name.toUpperCase()} Smartcard: `;
+						}
+						$('#transactions').append(`
+							<li class="collection-item transaction">
+								<div class="transaction-info-left">
+									<div class="transaction-recipient">
+										<span>${(tx_token ? `Meter Number: ` : tx_service)} ${topupnumber}</span>
+										<span>${(tx_token ? `Zesco Token: ` : '')} ${tx_token}</span>
+									</div>
+									<div class="transaction-id-date">
+										<span class="transaction-date">${server_time}</span>
+									</div>
+								</div>
+								<div class="transaction-info-right">
+									<!--
+									<span class="transaction-service">
+										<span>${tx_service}</span>
+										<span>${(tx_token ? `Zesco Token: ` : '')}</span>
+									</span>
+									-->
+									<span class="transaction-amount taller">ZMW ${amount.replace('.00', '')}</span>
+									<span class="transaction-id">Tx Ref: sparcozm-${id}</span> 
+								</div>
+							</li>
+							`)
+					})
+				})
+				*/
+				$.get(`${SERVER_URL}/activities-v2.php?token=${localStorage.jwt}`, function(activities){
+					$('#tx-page-loader').css({'display':'none'})
+					let activities_output = ''
+					activities.forEach((year_activity)=>{
+						console.log(year_activity)
+						// return
+						// if(activity.hasOwnProperty('year')){
+						//     activities_output += `<li class="collection-header"><h6>${activity['year']}</h6></li>`
+						// }else{
+							
+						// }
+						activities_output += `<li class="collection-header" style="padding-left:20px;"><h6>${year_activity['year']}</h6></li>`
+						year_activity['activities'].forEach((activity)=>{
+							activities_output += `
+							<li class="collection-item activity" data-id="${activity['id']}" data-service="${activity['service_type']}">
+									<div class="activity-date-month">
+										<span class="activity-month">${activity['month']}</span>
+										<span class="activity-date">${activity['date']}</span>
+									</div>
+									<div class="activity-info">
+										<span class="activity-info-header">${activity['desc_title']}</span>
+										<span class="activity-info-desc">${activity['desc_summary']}</span> 
+									</div>
+									<div class="activity-amount">
+										<span class="activity-amount-details">-ZMW ${activity['amount']}</span>
+										
+										<i class="material-icons" style="position: absolute; right: 0;">navigate_next</i>
+									</div>
+									
+									
+							</li>
+							`
+						})
+					})
+					$('#activities').html(activities_output)
+				})
+				
+			})
+
+			$(document).on('click','.activity', function(){
+				let service_type = $(this).data('service')
+				// if(service_type == 'loan'){
+				// 	return;
+				// }
+				$('#tx-modal-heading').css({display: 'none'})
+				$('#tx-modal-details').html(`
+					<p style="text-align: center;">loading transaction details...</p>
+				`)
+				let tx_modal = M.Modal.getInstance($('#tx-modal'));
+				tx_modal.open();  
+				// let service_type = $(this).data('service')
+				let id = $(this).data('id')
+				let check_mark = `<i class="material-icons icon-green" style="vertical-align: middle;font-size: 15px; color: #8f8f8f;">check_circle</i>`
+				let cross_mark = `<i class="material-icons icon-red" style="vertical-align: middle;font-size: 15px; color: #8f8f8f;">cancel</i>`
+
+				let contact_html = `
+					<span style="text-align: center; display: block;">Contact Us For Support:</span>
+					<button class="btn-small btn-flat support-contact-btn" data-link="tel:+260975687373" style="text-align: center; display: block; padding: 0; margin: 0 auto;height: 30px;" ><i class="material-icons left">local_phone</i>+260975687373</button>
+					<button class="btn-small btn-flat support-contact-btn" data-link="mailto:support@broadpay.co.zm" style="text-align: center;  display: block; text-transform: lowercase; padding: 0; margin: 0 auto;height: 30px;" ><i class="material-icons left">mail</i>support@broadpay.co.zm</button>
+				`
+				$.get(`${SERVER_URL}/activity.php`,{token: localStorage.jwt,service:service_type,id:id}, function(activity){
+					$('#tx-modal-heading').css({display: 'block'})
+					console.log(activity)
+					if(service_type == 'bill_payment'){
+						let token = `
+						<span id="tx-modal-token-header">Zesco Token</span>
+						<h6 id="tx-modal-token" style=" margin-top: 0;">${activity['topupcode']}</h6>
+						`
+						$('#tx-modal-details').html(`
+						<span id="tx-modal-datetime">${activity['datetime']}</span>
+						<h5 id="tx-modal-title">${(activity['service'] == 'zesco') ? 'Zesco Purchase' : activity['topupcode']}</h5>
+						<span id="tx-modal-destination-header">Recipient</span>
+						<h6 id="tx-modal-destination"  style=" margin-top: 0;">${activity['topupnumber']}</h6>
+						${(activity['service'] == 'zesco') ? token :''}
+						<h5 id="tx-modal-amount">ZMW ${activity['amount']}</h5>
+						<p id="tx-modal-debit-status">Payment Status: ${activity['paymentstatus']} ${(activity['paymentstatus'] == 'PROCESSED')?check_mark:cross_mark}</p>
+						<p id="tx-modal-credit-status">TopUp Status: ${activity['orderstatus']} ${(activity['orderstatus'] == 'PROCESSED')?check_mark:cross_mark}</p>
+
+						`)
+					}
+					if(service_type == 'money_transfer'){
+
+						let credit_error = `Failed to send money to ${activity['recipient_name']}(${activity['destination']}).Contact Support if the credit status doesn't change in the next 1 hour.`
+
+						$('#tx-modal-details').html(`
+						<span id="tx-modal-datetime">${activity['datetime']}</span>
+						<h5 id="tx-modal-title">${activity['debit_service'].toUpperCase()} to ${activity['credit_service'].toUpperCase()} Money Transfer</h5>
+						<span id="tx-modal-destination-header">Recipient</span>
+						<h6 id="tx-modal-destination-name"  style=" margin-top: 0;">${activity['recipient_name']}</h6>
+						<h6 id="tx-modal-destination"  style=" margin-top: 0;">${activity['destination']}</h6>
+						
+						<h5 id="tx-modal-amount">ZMW ${activity['amount']}</h5>
+						<p id="tx-modal-debit-status">Debit Status: ${activity['debit_status']} ${(activity['debit_status'] == 'PROCESSED')?check_mark:cross_mark}</p>
+						<p id="tx-modal-debit-err">${(activity['debit_status'] == 'FAILED') ? `Failed to debit you`:''}</p>
+						<p id="tx-modal-credit-status">Credit Status: ${activity['credit_status']} ${(activity['credit_status'] == 'PROCESSED')?check_mark:cross_mark}</p>
+						<p id="tx-modal-credit-err">${((activity['debit_status'] == 'PROCESSED') && (activity['credit_status'] == 'FAILED')) ? credit_error:''}</p>
+						${((activity['debit_status'] == 'PROCESSED') && (activity['credit_status'] == 'FAILED')) ? contact_html:''}
+
+						`)
+					}
+					if(service_type == 'loan'){
+						let credit_error = `Failed to send money to ${activity['recipient_name']}(${activity['destination']}).Contact Support if the credit status doesn't change in the next 1 hour.`
+
+						$('#tx-modal-details').html(`
+						<span id="tx-modal-datetime">${activity['datetime']}</span>
+						<h5 id="tx-modal-title">Pay Day Loan</h5>
+						<span id="tx-modal-token-header">Principle Amount</span>
+						<h6 id="tx-modal-token" style=" margin-top: 0;">ZMW ${activity['amount_loaned']}</h6>
+
+						<span id="tx-modal-token-header">Interest</span>
+						<h6 style=" margin-top: 0;">${activity['interest']}%</h6>
+
+						<span id="tx-modal-header">Loan Amount</span>
+						<h5 id="tx-modal-amount" style="padding: 0;margin:0;">ZMW ${activity['amount_owing']}</h5>
+						${
+							(Boolean(parseInt(activity['credited'])))?`
+								<span>Due Date</span>
+								<h6 style=" margin-top: 0; font-weight: bold;">${activity['due_date']}</h6>
+							`:''
+						}
+
+						<p id="tx-modal-debit-status">Credit Status:  ${(Boolean(parseInt(activity['credited'])))?'Processed':'Failed'}  ${(Boolean(parseInt(activity['credited'])))?check_mark:cross_mark} </p>
+						${(Boolean(parseInt(activity['credited'])))?`
+						<p id="tx-modal-credit-status">Repayment Status: ${(Boolean(parseInt(activity['repayed'])))?`Processed ${check_mark}`:'Pending'} </p>
+						`:''}
+
+						${(!Boolean(parseInt(activity['credited']))) ? contact_html:''}
+
+					`)
+					}
+
+				})
+			})
+
+			$('#dismiss-tx-page').on('click', function(){
+				$('#tx-page').fadeOut();
+			})
+
+			$('#open-profile-page').on('click', function(){
+				let sidenav = document.querySelector('.sidenav');
+
+				$("#dismiss-complete-profile-page").css({display: 'block'})
+				
+				let instance = M.Sidenav.getInstance(sidenav);
+				instance.close();
+
+				$('#complete-profile-page').fadeIn();
+				$('#checking-profile-details-loader').css({display: 'block'})
+				$.get(`${SERVER_URL}/user-data.php?token=${localStorage.jwt}`, (user)=>{
+						// $('#checking-user-details-loader').css({'display':'none'})
+						console.log(user)
+
+						// let dob_elem = document.querySelector('#complete-profile-dob');
+    					// let dob_instance = M.Datepicker.getInstance(dob_elem);
+						// dob_instance.setDate(new Date(user['dob']));
+						$("#complete-profile-fname").val(user['first_name'])
+						$("#complete-profile-lname").val(user['last_name'])
+						$("#complete-profile-email").val(user['email'])
+						$("#complete-profile-dob").val(user['dob'])	
+						$("#complete-profile-sex").val(user['sex'])
+						$("#complete-profile-town").val(user['city'])
+						$("#complete-profile-province").val(user['province'])
+						$("#complete-profile-city").val(user['country'])
+						
+						if(user['city']){
+							$("#complete-profile-province-selected").text(`${user['city']}, ${(user['province'])?`${user['province']},`:''} ${user['country']}`)
+						}
+						
+						$('select').formSelect();
+
+						M.updateTextFields();
+						
+						/*
+						{"first_name":"Mundia","last_name":"Mwala","dob":"1970-01-01","sex":"male","email":"mundia@broadpay.co.zm","phone":"+260961453688","is_verified":true,"verification_status":""}
+						*/
+
+				})
+				.fail((err)=>{
+
+				})
+				.always(()=>{
+					$('#checking-profile-details-loader').css({display: 'none'})
+				})
+
+
+
+				return;
+				$("#user-info-wrap").empty();
+
+				$('#checking-user-details-loader').css({'display':'block'})
+
+				$('#profile-page').fadeIn();
+
+				let add_user_info = (user)=>{
+
+						$("#user-info-wrap").html(`
+							<div id="inner-user-info-wrap">
+								<!--
+								<h5 class="center">User Status: <span id="user-status"></span></h5>
+								<p  id="user-status-msg" style="font-size: 12px; text-align: center;"></p>
+								-->
+								<div class="user-value-title-wrap">
+									<span class="user-value-title">
+										<span class="user-title">Name</span>
+										<span id="user-name" class="user-value"><span id="user-fname">${user['first_name']}</span> <span id="user-lname">${user['last_name']}</span></span> 
+									</span>
+									<!--
+									${(!user['is_verified'])? '<i id="edit-user-name" class="material-icons">edit</i>' : ''}
+									-->
+									<i id="edit-user-name" class="material-icons">edit</i>
+									
+								</div>
+								<div class="user-value-title-wrap">
+										<span class="user-value-title">
+											<span class="user-title">Date of Birth</span> 
+											<span id="user-dob" class="user-value datepicker">${user['dob']}</span>
+											<input id="dob-input" type="text" class="datepicker" style="display: none">	
+										</span>
+										<i id="edit-user-dob" class="material-icons">edit</i>
+										<!--
+										${(!user['is_verified'])? '<i id="edit-user-dob" class="material-icons">edit</i>' : ''}
+										-->
+								</div>
+								<div class="user-value-title-wrap">
+										<span class="user-value-title">
+											<span class="user-title">Sex</span> 
+											<span id="user-sex" class="user-value">${user['sex']}</span>	
+										</span>
+										<i id="edit-user-sex" class="material-icons">edit</i>
+										<!--
+										${(!user['is_verified'])? '<i id="edit-user-sex" class="material-icons">edit</i>' : ''}
+										-->
+								</div>
+								<div class="user-value-title-wrap">
+									<span class="user-value-title">
+										<span class="user-title">Email</span> 
+										<span id="user-email" class="user-value">${user['email']}</span>
+									</span>
+									<i id="edit-user-email" class="material-icons">edit</i>
+								</div>
+								<div class="user-value-title-wrap">
+									<span class="user-value-title">
+										<span class="user-title">Phone</span> 
+										<span id="profile-user-phone" class="user-value">${user['phone']}</span>	
+									</span>
+									<i id="edit-user-phone" class="material-icons">edit</i>
+								</div>
+								<div class="user-value-title-wrap">
+									<span class="user-value-title">
+										<span class="user-title">Location</span> 
+										<span id="profile-user-location" class="user-value">Lusaka, Zambia</span>	
+									</span>
+									<i id="edit-user-location" class="material-icons">edit</i>
+								</div>
+								<!--
+								${(!user['is_verified'])?
+								'<button id="user-status-verification-btn" class="btn sparco-blue" style="margin: 10px auto;display: block;">Submit For Verification</button>': ''
+								}
+								-->
+							</div>
+							`)
+							if(user['is_verified']){
+								$("#user-status").text('Verified')
+								$("#user-status").css({'color': 'green'})
+								$("#user-status-msg").text('')
+							}else{
+								$("#user-status").text('Unverified')
+								$("#user-status").css({'color': 'red'})	
+								$("#user-status-msg").text('Please note that you are unable to make transfer if you status is unverified. Fill all the fields to get you account verified.')
+							}
+							if(user['verification_status'] == 'PROCESSING'){
+								$('#user-status-verification-btn').text('Under Review')
+								$('#user-status-verification-btn').attr('disabled', true)
+							}
+							// if(user['verification_status'] == 'FAILED'){
+							// 	$('#user-status-verification-btn').text('Under Review')
+							// 	$('#user-status-verification-btn').attr('disabled', true)
+							// }
+							$('.datepicker').datepicker({
+								'yearRange':50,
+								'format': 'dd/mm/yyyy',
+								/*
+								'onSelect': function(date){
+								    // console.log(date)
+								    $('#user-dob').text(moment(date).format('DD/MM/YYYY'))
+								    $('#user-dob').data('dob',date)
+								},
+								
+								'onClose': function(){
+								    // let dob = $('#user-dob').text();
+								    let dob = $('#user-dob').data('dob');
+								    dob = moment(dob).format('YYYY-MM-DD')
+								    // dob = moment(dob).format('DD-MM-YYYY')
+								    console.log(`Closing ${dob}`)
+								    $.post(`${SERVER_URL}/user-data.php?token=${localStorage.jwt}`,{'dob':dob},(res)=>{
+								        console.log(res)
+								    })
+								}
+								*/
+							});
+				}
+
+				let get_user_profile = ()=>{
+
+					// $.get(`${SERVER_URL}/profile-info.php?token=${localStorage.jwt}`, function(user){
+					$.get(`${SERVER_URL}/user-data.php?token=${localStorage.jwt}`, function(user){
+						$('#checking-user-details-loader').css({'display':'none'})
+						console.log(user)
+						add_user_info(user);
+
+					})
+
+				}
+
+				get_user_profile()
+			})
+
+			// $('#open-profile-page').click() //Test
+
+			$('#dismiss-profile-page').on('click', function(){
+				$('#profile-page').fadeOut();
+			})
+
+			$('#open-support-page').on('click', function(){
+				let support_modal = M.Modal.getInstance($('#support-modal'));
+				support_modal.open(); 
+
+				let sidenav = document.querySelector('.sidenav');
+				
+				let instance = M.Sidenav.getInstance(sidenav);
+				instance.close();
+			})
+
+			$('#dismiss-electricity-topup-page').on('click', function(){
+				$('#electricity-topup-page').fadeOut();
+			})
+			$('#dismiss-tv-topup-page').on('click', function(){
+				$('#tv-topup-page').fadeOut();
+			})
+
+			function get_user_data(){
+
+				$.get(`${SERVER_URL}/user-data.php?token=${localStorage.jwt}`,(user)=>{
+					console.log(user)
+					$('#checking-user-details-loader').css({'display':'none'})
+					$("#user-info-wrap").html(`
+					<h5 class="center">User Status: <span id="user-status"></span></h5>
+					<p  id="user-status-msg" style="font-size: 12px; text-align: center;"></p>
+					<div class="user-value-title-wrap">
+						<span class="user-value-title">
+							<span class="user-title">Name</span>
+							<span id="user-name" class="user-value"><span id="user-fname">${user['first_name']}</span> <span id="user-lname">${user['last_name']}</span></span> 
+						</span>
+						<!--
+						<i id="edit-user-name" class="material-icons">edit</i>
+						-->
+						${(!user['is_verified'])? '<i id="edit-user-name" class="material-icons">edit</i>' : ''}
+									
+					</div>
+					<div class="user-value-title-wrap">
+							<span class="user-value-title">
+								<span class="user-title">Date of Birth</span> 
+								<span id="user-dob" class="user-value datepicker">${user['dob']}</span>
+								<input id="dob-input" type="text" class="datepicker" style="display: none">	
+							</span>
+							<!--
+							<i id="edit-user-dob" class="material-icons">edit</i>
+							-->
+							${(!user['is_verified'])? '<i id="edit-user-dob" class="material-icons">edit</i>' : ''}
+									
+					</div>
+					<div class="user-value-title-wrap">
+							<span class="user-value-title">
+								<span class="user-title">Sex</span> 
+								<span id="user-sex" class="user-value">${user['sex']}</span>	
+							</span>
+							<!--
+							<i id="edit-user-sex" class="material-icons">edit</i>
+							-->
+							${(!user['is_verified'])? '<i id="edit-user-sex" class="material-icons">edit</i>' : ''}
+					</div>
+					<div class="user-value-title-wrap">
+						<span class="user-value-title">
+							<span class="user-title">Email</span> 
+							<span id="user-email" class="user-value">${user['email']}</span>
+						</span>
+						<i id="edit-user-email" class="material-icons">edit</i>
+					</div>
+					<div class="user-value-title-wrap">
+						<span class="user-value-title">
+							<span class="user-title">Phone</span> 
+							<span id="profile-user-phone" class="user-value">${user['phone']}</span>	
+						</span>
+						<i id="edit-user-phone" class="material-icons">edit</i>
+					</div>
+					<div class="user-value-title-wrap">
+							<span class="user-value-title">
+								<span class="user-title">Location</span> 
+								<span id="profile-user-location" class="user-value">Lusaka, Zambia</span>	
+							</span>
+							<i id="edit-user-location" class="material-icons">edit</i>
+					</div>
+					<!--
+					<div class="user-value-title-wrap">
+						<span class="user-value-title">
+							<span class="user-title">id</span> 
+							<span id="profile-user-id" class="user-value">1111/11111/1111</span>	
+						</span>
+						<i id="edit-user-id" class="material-icons">edit</i>
+					</div>
+					-->
+					${(!user['is_verified'])?
+					'<button id="user-status-verification-btn" class="btn sparco-blue" style="margin: 10px auto;display: block;">Submit For Verification	<button': ''
+					}
+							`)
+					if(user['is_verified']){
+						$("#user-status").text('Verified')
+						$("#user-status").css({'color': 'green'})
+						$("#user-status-msg").text('')
+					}else{
+						$("#user-status").text('Unverified')
+						$("#user-status").css({'color': 'red'})	
+						$("#user-status-msg").text('Please note that you are unable to make transfer if you status is unverified. Fill all the fields to get you account verified.')
+					}
+
+					if(user['verification_status'] == 'PROCESSING'){
+						$('#user-status-verification-btn').attr('disabled',true)
+						$('#user-status-verification-btn').text('Under Review')
+					}
+
+					$('.datepicker').datepicker({
+							'yearRange':50,
+							'format': 'dd/mm/yyyy',
+							'onSelect': function(date){
+								// console.log(date)
+								$('#user-dob').text(moment(date).format('DD/MM/YYYY'))
+								$('#user-dob').data('dob',date)
+							},
+							'onClose': function(){
+								// let dob = $('#user-dob').text();
+								let dob = $('#user-dob').data('dob');
+								dob = moment(dob).format('YYYY-MM-DD')
+								// dob = moment(dob).format('DD-MM-YYYY')
+								console.log(`Closing ${dob}`)
+								$.post(`${SERVER_URL}/user-data.php?token=${localStorage.jwt}`,{'dob':dob},(res)=>{
+									console.log(res)
+								})
+							}
+					});
+				})	
+			}
+
+			// get_user_data()
+
+			$(document).on('click','#user-status-verification-btn',function(){
+				$.get(`${SERVER_URL}/user-data.php`,{token:localStorage.jwt, action: 'verify'},function(res){
+					console.log(res)
+				})
+			})
+
+			$(document).on("click", "#edit-user-name", function(){
+
+				let user_details_modal = M.Modal.getInstance($('#user-details-modal'));
+				user_details_modal.open();
+
+
+				$("#user-details-modal > .modal-content").html(`
+						<div id="user-profile-wrap">
+								<div class="input-field col s6">
+									<!-- <i class="material-icons prefix">phone_android</i> -->
+									<label class="active" for="fname_input">First Name</label>
+									<input id="fname_input" type="text" class="validate" value="${$('#user-fname').text().trim()}" >
+								</div>
+								<div class="input-field col s6">
+									<!-- <i class="material-icons prefix">phone_android</i> -->
+									<label class="active" for="fname_input">Last Name</label>
+									<input id="lname_input" type="text" class="validate" value="${$('#user-lname').text().trim()}" >
+								</div>
+							    <div id="user-profile-btns-wrap" class="input-field col s6">
+						          <a class="btn waves-effect waves-light btn-small save-user-name-btn sparco-blue"  data-input="fname">Save</a>
+						        </div>
+						</div>
+					`);
+			})
+			
+			$(document).on("click", ".save-user-name-btn",function(){
+				let fname = $('#fname_input').val()
+				let lname = $('#lname_input').val()
+				$(".save-user-name-btn").attr("disabled", true)
+				$.post(`${SERVER_URL}/user-data.php?token=${localStorage.jwt}&action=username`,{'fname':fname,'lname':lname},(res)=>{
+					$(".save-user-name-btn").attr("disabled", false)
+					let user_details_modal = M.Modal.getInstance($('#user-details-modal'));
+					user_details_modal.close();
+					console.log(res)
+				})
+			})
+
+			$(document).on("click", "#edit-user-dob", function(){
+
+				// let user_details_modal = M.Modal.getInstance($('#user-details-modal'));
+				// user_details_modal.open();
+
+				// let user_dob = M.Modal.getInstance($('#user-dob'));
+				// user_dob.open()
+				$('#user-dob').click()
+				/*
+				$("#user-details-modal > .modal-content").html(`
+					<div id="user-profile-wrap">
+							<div class="input-field col s6">
+								<input id="lname_input" type="text" class="validate" value="${$('#user-lname').text().trim()}">
+								<label class="active" for="lname_input">Last Name</label>
+							</div>
+							<div id="user-profile-btns-wrap" class="input-field col s6">
+							<a id="save-lname" class="btn waves-effect waves-light btn-small save-profile-info-btn sparco-blue">Save</a>		
+							</div>
+					</div>
+				`);
+				*/
+			})
+
+			$(document).on("click","#edit-user-sex",function(){
+
+
+				let user_details_modal = M.Modal.getInstance($('#user-details-modal'));
+				user_details_modal.open();
+
+				$("#user-details-modal > .modal-content").html(`
+					<div id="user-profile-wrap">
+							<p>
+							<label>
+								<input class="with-gap" name="sex" value="male" type="radio" checked />
+								<span>Male</span>
+							</label>
+							</p>
+							<p>
+							<label>
+								<input class="with-gap" name="sex" value="female" type="radio" />
+								<span>Female</span>
+							</label>
+							</p>
+							<div id="user-profile-btns-wrap" class="input-field col s6">
+								<a id="save-email" class="btn waves-effect waves-light btn-small save-user-sex-btn sparco-blue">Save</a>	
+							</div>
+					</div>
+				`);
+			})
+			
+			$(document).on("click",".save-user-sex-btn",function(){
+				let user_gender = $("input[name='sex']:checked").val();
+				// alert(user_gender)
+				$.post(`${SERVER_URL}/user-data.php?token=${localStorage.jwt}&action=username`,{'sex':user_gender},(res)=>{
+					
+					console.log(res)
+				})
+			})
+
+			$(document).on("click","#edit-user-email",function(){
+
+
+				let user_details_modal = M.Modal.getInstance($('#user-details-modal'));
+				user_details_modal.open();
+
+				$("#user-details-modal > .modal-content").html(`
+						<div id="user-profile-wrap">
+								<div class="input-field col s6">
+									<input id="email_input" type="text" class="validate" value="${$('#user-email').text().trim()}">
+									<label class="active" for="email_input">Email</label>
+								</div>
+							    <div id="user-profile-btns-wrap" class="input-field col s6">
+						          <a id="save-email" class="btn waves-effect waves-light btn-small save-user-email-btn sparco-blue">Save</a>	
+						        </div>
+						</div>
+					`);
+			})
+
+			$(document).on("click",".save-user-email-btn",function(){
+				let user_email = $("#email_input").val();
+				// alert(user_gender)
+				$.post(`${SERVER_URL}/user-data.php?token=${localStorage.jwt}&action=username`,{'email':user_email},(res)=>{
+					
+					console.log(res)
+				})
+			})
+
+			$(document).on("click", "#edit-user-phone", function(){
+
+				let user_details_modal = M.Modal.getInstance($('#user-details-modal'));
+				user_details_modal.open();
+
+				$("#user-details-modal > .modal-content").html(`
+						<div id="user-profile-wrap">
+								<div class="input-field col s6">
+									<input id="phone_input" type="text" class="validate" value="${$('#profile-user-phone').text().trim()}">
+									<label class="active" for="phone_input">Phone Number</label>
+								</div>
+							    <div id="user-profile-btns-wrap" class="input-field col s6">
+						          <a id="save-email" class="btn waves-effect waves-light btn-small save-user-phone-btn sparco-blue">Save</a>		
+						        </div>
+						</div>
+					`);
+			})
+
+			$(document).on("click",".save-user-phone-btn",function(){
+				let phone_input = $("#phone_input").val();
+				// alert(user_gender)
+				$.post(`${SERVER_URL}/user-data.php?token=${localStorage.jwt}&action=username`,{'phone':phone_input},(res)=>{
+					
+					console.log(res)
+				})
+			})
+
+			$(document).on("click", "#edit-user-id", function(){
+
+				let user_details_modal = M.Modal.getInstance($('#user-details-modal'));
+				user_details_modal.open();
+
+				$("#user-details-modal > .modal-content").html(`
+						<div id="user-profile-wrap">
+								<div class="input-field col s6">
+									<input id="id_input" type="text" class="validate" value="">
+									<label class="active" for="id_input">ID</label>
+								</div>
+								<button id="pickIdBtn" class="btn">Pick ID</button>
+								<div id="user-profile-btns-wrap" class="input-field col s6">
+								<a id="save-email" class="btn waves-effect waves-light btn-small save-user-id-btn sparco-blue">Save</a>		
+								</div>							
+						</div>
+					`);
+			})
+
+			$(document).on("click", "#edit-user-location", function(){
+
+				let user_details_modal = M.Modal.getInstance($('#user-details-modal'));
+				user_details_modal.open();
+
+				$("#user-details-modal > .modal-content").html(`
+						<div id="user-profile-wrap">
+								<div class="input-field col s6">
+									<input id="id_input" type="text" class="validate" value="">
+									<label class="active" for="id_input">ID</label>
+								</div>
+								<button id="pickIdBtn" class="btn">Pick ID</button>
+								<div id="user-profile-btns-wrap" class="input-field col s6">
+								<a id="save-email" class="btn waves-effect waves-light btn-small save-user-id-btn sparco-blue">Save</a>		
+								</div>							
+						</div>
+					`);
+			})
+			
+			$(document).on("click", "#edit-user-pw", function(){
+
+				let user_details_modal = M.Modal.getInstance($('#user-details-modal'));
+				user_details_modal.open();
+
+				$("#user-details-modal > .modal-content").html(`
+					<div id="user-profile-wrap" style="height: 265px !important;">
+							<div class="input-field col s6">
+								<input id="cur_pw_input" type="password" class="validate" >
+								<label class="active" for="cur_pw_input">Current Passcode</label>
+							</div>
+							<div class="input-field col s6">
+								<input id="new_pw_input" type="password" class="validate">
+								<label class="active" for="new_pw_input">New Passcode</label>
+							</div>
+							<div class="input-field col s6">
+								<input id="new_pw2_input" type="password" class="validate">
+								<label class="active" for="new_pw2_input">Cofirm New Password</label>
+							</div>
+						    <div id="user-profile-btns-wrap" class="input-field col s6">
+					          <a id="save-new-pw-btn" class="btn waves-effect waves-light btn-small sparco-blue">Save</a>	
+					        </div>
+					</div>
+					`);
+			})
+
+			$('#open-about-page').on('click', function(){
+				let sidenav = document.querySelector('.sidenav');
+				
+				let instance = M.Sidenav.getInstance(sidenav);
+				instance.close();
+
+				$('#about-page').fadeIn();
+			})
+
+			$('#dismiss-about-page').on('click', function(){
+				$('#about-page').fadeOut();
+			})
+
+			$('#open-add-card-page').on('click', function(){
+				// let sidenav = document.querySelector('.sidenav');
+				
+				// let instance = M.Sidenav.getInstance(sidenav);
+				// instance.close();
+
+
+				$('#add-card-page').fadeIn();
+			})
+
+			$('#dismiss-add-card-page').on('click', function(){
+				$('#add-card-page').fadeOut();
+				// let ccp = M.Modal.getInstance($('#add-card-page'));
+				// ccp.close()
+			})
+
+			$('#dismiss-addr-auth-page').on('click', function(){
+				// $('#add-card-page').fadeOut();
+				let addr_auth_page = M.Modal.getInstance($('#addr-auth-page'));
+				addr_auth_page.close()
+			})
+
+			$('#dismiss-auth-page').on('click', function(){
+				$('#auth-page').fadeOut();
+			})
+
+			$('.service-transfers').on('click', function(){
+				let transfers_loader_modal = M.Modal.getInstance($('#transfers-loader-modal'));
+				transfers_loader_modal.open();  
+				// TODO Check if you is verified
+				$('#dialpad-inner-wrap').html(`
+					<div id="dialpad-tab-name-input-wrapper" class="input-field col s12 animated fadeIn slow"  style="display: none;">
+						<input value="" id="dialpad-tab-name" type="text" class="validate">
+						<label class="active" for="dialpad-tab-name">Recipient's Name</label>
+					</div>
+					<div id="dialpad-tab-transfer-num-input-wrapper" class="input-field col s12 animated fadeIn slow">
+						<!-- <i class="material-icons prefix">phone</i> -->
+						<input value="" id="dialpad-tab-transfer-num" type="tel" class="validate">
+						<label class="active" for="dialpad-tab-transfer-num">Recipient's MTN/Zamtel Money Number</label>
+						<button onclick="getContact()" id="get-contact-btn" class="waves-effect waves-light btn-flat sparco-blue white-text" style="position: absolute; top: 5px; right: 0;"><i class="material-icons">contacts</i></button>
+					</div>
+					<div id="dialpad-tab-transfer-amount-input-wrapper" class="input-field col s12 animated fadeIn slow" style="display: none;">
+						<input value="" id="dialpad-tab-transfer-amount" type="number" class="validate">
+						<label class="active" for="dialpad-tab-transfer-amount">Enter Amount(ZMW)</label>
+					</div>
+					<div id="dialpad-tab-transfer-ref-input-wrapper" class="input-field col s12 animated fadeIn slow" style="display: none;">
+						<input value="" id="dialpad-tab-transfer-ref" type="text" class="validate">
+						<label class="active" for="dialpad-tab-transfer-ref">Reference(Optional)</label>
+					</div>
+					<div class="col s12 select-funding-source btn-flat animated fadeIn slow" style="border-bottom: 1px solid #9e9e9e; margin-bottom: 10px; padding: 10px; height: 46px; width: 100%; display: none;">
+						<span style="color: #9e9e9e;">
+							Select Payment Method
+						</span>
+						<i class="material-icons right">arrow_drop_down</i>
+					</div>
+					<!--			
+					<button class="btn sparco-blue align-center sparco-center-btn dial-pad-transfer-checkout-v2-btn animated fadeIn slow">
+						Proceed
+						<i class="material-icons right">arrow_forward</i>
+					</button>
+					-->				
+					<button class="btn sparco-blue align-center sparco-center-btn dial-pad-transfer-checkout-btn">
+						Proceed
+						<i class="material-icons right">arrow_forward</i>
+					</button>	
+
+					<div style="margin: 10px; text-align: center">
+							Please note that you can only make transfers from bank cards and MTN/Zamtel Money accounts to MTN/Zamtel Money accounts at the moment.
+					</div>	
+					`)
+				// $('#contacts-page').fadeIn();
+				$.get(`${SERVER_URL}/user-transfer-status.php`,{token:localStorage.jwt},function(res){
+					console.log(res)
+					localStorage.setItem("allowed_momo_regex", res.allowed_momo_regex)
+					localStorage.setItem("regex_err_msg", res.regex_err_msg)
+					$('#dialpad-inner-wrap').html(`
+					<div id="dialpad-tab-name-input-wrapper" class="input-field col s12 animated fadeIn slow"  style="display: none;">
+						<input value="" id="dialpad-tab-name" type="text" class="validate">
+						<label class="active" for="dialpad-tab-name">Recipient's Name</label>
+					</div>
+					<div id="dialpad-tab-transfer-num-input-wrapper" class="input-field col s12 animated fadeIn slow">
+						<!-- <i class="material-icons prefix">phone</i> -->
+						<input value="" id="dialpad-tab-transfer-num" type="tel" class="validate">
+						<label class="active" for="dialpad-tab-transfer-num">${res.wallet_num_label}</label>
+						<button onclick="getContact()" id="get-contact-btn" class="waves-effect waves-light btn-flat sparco-blue white-text" style="position: absolute; top: 5px; right: 0;"><i class="material-icons">contacts</i></button>
+					</div>
+					<div id="dialpad-tab-transfer-amount-input-wrapper" class="input-field col s12 animated fadeIn slow" style="display: none;">
+						<input value="" id="dialpad-tab-transfer-amount" type="number" class="validate">
+						<label class="active" for="dialpad-tab-transfer-amount">Enter Amount(ZMW)</label>
+					</div>
+					<div id="dialpad-tab-transfer-ref-input-wrapper" class="input-field col s12 animated fadeIn slow" style="display: none;">
+						<input value="" id="dialpad-tab-transfer-ref" type="text" class="validate">
+						<label class="active" for="dialpad-tab-transfer-ref">Reference(Optional)</label>
+					</div>
+					<div class="col s12 select-funding-source btn-flat animated fadeIn slow" style="border-bottom: 1px solid #9e9e9e; margin-bottom: 10px; padding: 10px; height: 46px; width: 100%; display: none;">
+						<span style="color: #9e9e9e;">
+							Select Payment Method
+						</span>
+						<i class="material-icons right">arrow_drop_down</i>
+					</div>
+					<!--			
+					<button class="btn sparco-blue align-center sparco-center-btn dial-pad-transfer-checkout-v2-btn animated fadeIn slow">
+						Proceed
+						<i class="material-icons right">arrow_forward</i>
+					</button>
+					-->				
+					<button class="btn sparco-blue align-center sparco-center-btn dial-pad-transfer-checkout-btn">
+						Proceed
+						<i class="material-icons right">arrow_forward</i>
+					</button>	
+
+					<div style="margin: 10px; text-align: center">
+							${res.notice}
+					</div>	
+					`)
+					if(res.is_verified){
+						$('#contacts-page').fadeIn();
+					}else{
+						$('#open-profile-page').click()
+					}
+					
+				}).fail(function(error){
+					console.log(error.responseText)
+					// alert('Error check user transfer status')
+				}).always(function(){
+					transfers_loader_modal.close(); 
+				})
+
+				localStorage.setItem('service_type', 'money_transfer')
+
+				$('#contacts-page-heading').text('Send Money')
+
+				let sidenav = document.querySelector('.sidenav');
+				let instance = M.Sidenav.getInstance(sidenav);
+				instance.close();
+				/*
+				$('#dialpad-inner-wrap').html(`
+					<div class="input-field col s12">
+						<input value="Mundia Mwala" id="dialpad-tab-name" type="text" class="validate">
+						<label class="active" for="dialpad-tab-name">Recipient's Name</label>
+					</div>
+					<div class="input-field col s12">
+						<input value="0961453688" id="dialpad-tab-transfer-num" type="tel" class="validate">
+						<label class="active" for="dialpad-tab-transfer-num">Recipient's Mobile Money Number(MTN/Airtel)</label>
+					</div>
+					<div class="input-field col s12">
+						<input value="10" id="dialpad-tab-transfer-amount" type="number" class="validate">
+						<label class="active" for="dialpad-tab-transfer-amount">Enter Amount(ZMW)</label>
+					</div>
+					<div class="col s12 select-funding-source btn-flat" style="border-bottom: 1px solid #9e9e9e; margin-bottom: 10px; padding: 10px;height: 46px; width: 100%;">
+						<span style="color: #9e9e9e;">
+							Select Funding Source
+						</span>
+						<i class="material-icons right">arrow_drop_down</i>
+					</div>			
+					<button class="btn sparco-blue align-center sparco-center-btn dial-pad-transfer-checkout-btn">
+						Proceed
+						<i class="material-icons right">arrow_forward</i>
+					</button>	
+				`)
+				*/
+				
+				// let coming_soon_modal = M.Modal.getInstance($('#coming-soon-modal'));
+				// coming_soon_modal.open();  
+				// return;	
+			})
+
+			// $('.service-transfers').click()
+
+			function confirm_transfer() {
+
+				let confirm_transfer_modal = M.Modal.getInstance($('#confirm-transfer-modal'));
+				confirm_transfer_modal.close(); 
+				// pay_with_saved_pm()
+
+				let pm_id = JSON.parse(localStorage['transfer_data'])['pmid']
+
+				if (pm_id == 'new') {
+					console.log('transfer_with_unsaved_pm')
+					// pay_with_unsaved_pm(save_payment_method='false')
+					show_save_pm_dialog()
+				}else{
+					console.log('transfer_with_saved_pm')
+					console.log(`PM ID: ${pm_id}`)
+					transfer_with_saved_pm()
+				}
+			}
+
+			$(document).on('click', '#confirm-transfer-btn', confirm_transfer);
+
+			function dismiss_transfer_confirm() {
+				let confirm_transfer_modal = M.Modal.getInstance($('#confirm-transfer-modal'));
+				confirm_transfer_modal.close(); 	
+			}
+			$(document).on('click', '#cancel-transfer-btn', dismiss_transfer_confirm);
+
+			function transfer_check_out() {
+				let recipient_name = $('#dialpad-tab-name').val();
+				let recipient_num = $('#dialpad-tab-transfer-num').val();
+				let amount = $('#dialpad-tab-transfer-amount').val();
+				let ref = $('#dialpad-tab-transfer-ref').val();
+				let pm_id = $('.select-funding-source').data('payment-method-id');
+
+				
+
+				if(!recipient_num){
+					alert(`Recipient's MTN Money number is required`)
+					return
+				}
+				recipient_num = recipient_num.replace(/\s+/g, '').replace(/\-/g, '').replace('+260', '0')
+
+				// if (!(recipient_num.startsWith("096") || recipient_num.startsWith("076"))) {
+				if (!(RegExp(localStorage.allowed_momo_regex)).test(recipient_num)) {
+					// alert('Only MTN Numbers support at the moment')
+					$('#err-modal-heading').text('Error')
+					$('#err-modal-msg').text(`Unsupported Mobile Money Wallet`)
+					let error_modal = M.Modal.getInstance($('#error-modal'));
+					error_modal.open(); 
+					return;
+				}
+
+				
+				if($('#dialpad-tab-name-input-wrapper').css('display') == 'none'){
+					$('#dialpad-tab-name-input-wrapper').css('display', 'block')
+					$('#dialpad-tab-transfer-amount-input-wrapper').css({display: 'block'})
+					$('#dialpad-tab-transfer-ref-input-wrapper').css({display: 'block'})
+					$('.select-funding-source').css({display: 'block'})
+					return
+				}
+
+				
+
+				if(!recipient_name){
+					alert('Recipient name is required')
+					return
+				}
+				if(!amount){
+					alert('Amount is required')
+					return
+				}
+				if(!pm_id){
+					alert('Funding source method is required')
+					return
+				}
+
+				let transfer_data = JSON.stringify({
+					'pmid':pm_id,
+					'recipient_name':recipient_name,
+					'recipient_num':recipient_num,
+					'amount':amount,
+					'ref': ref
+				})
+				localStorage.setItem('transfer_data',transfer_data)
+
+
+				//TODO: get amount and calculate fees
+
+				// let pmid = $('.select-funding-source').data('payment-method-id')
+
+				// let amount = $('#dialpad-tab-transfer-amount').val();
+
+				let data = {}
+				
+				if(pm_id == "new"){
+					if(localStorage.paymentmethod == 'card'){
+						let ccbin = JSON.parse(localStorage.cc_data)['ccnum'].replace(/\W/g, '').slice(0,6)
+						data['pm'] = 'card'
+						data['ccbin'] = ccbin
+					}
+					if(localStorage.paymentmethod == 'mobilemoney'){
+						data['pm'] = 'momo'
+					}
+				}else{
+					//Save Payment Method
+					data['pm'] = 'spm'
+					data['pmid'] = pm_id
+				}
+
+				let confirm_transfer_modal = M.Modal.getInstance($('#confirm-transfer-modal'));
+				confirm_transfer_modal.open();  
+				
+				$("#confirm-transfer-btn").attr('disabled', true)
+				$("#cancel-transfer-btn").attr('disabled', true)
+
+				$("#inner-transfer-info-wrap").html(`
+					<p id="loan-v2-modal-info" style="text-align: center">Please Wait</p>
+					<img id="loan-v2-modal-loader-img" 
+						style="display: block; margin-top: 10px; margin-right: auto; margin-left: auto; width: 40px"
+						src="./img/dloading.gif" height="40px">
+				`)
+
+				
+
+				$.ajax({
+					type: 'post',
+					url: `${SERVER_URL}/get-transfer-fees.php?token=${localStorage.getItem('jwt')}&amount=${amount}`,
+					data: data,
+					success: function (res) {
+						console.log(res)
+
+						if(res['is_error']){
+							// confirm_transfer_modal.close(); 
+							// alert(res['message'])
+							$("#inner-transfer-info-wrap").html(`
+							<h4 class="center-align">Error</h4>
+							<p class="red-text text-darken-2 center-align">${res['message']}</p>
+							`)
+							return;
+						}
+
+						$("#inner-transfer-info-wrap").html(`
+							<h4 class="center-align">Continue?</h4>
+							<p style="text-align: center" id='confirmaton-transfer-msg'>You will be charged ZMW ${res['fee']} to send a transfer of ZMW ${res['amount']}</p>
+							<p style="text-align: center" id='2ndconfirmaton-transfer-msg'>Total Amount: ZMW ${res['total_amount']}</p>
+							<div class="row">
+								<div class="col s3">
+									<button id="confirm-transfer-btn" type="button" class="btn btn-success">Proceed</button>
+								</div>
+								<div class="col s3"></div>
+								<div class="col s3">
+									<button id="cancel-transfer-btn" type="button" class="btn red darken">Cancel</button>
+								</div>
+							</div>
+						`)
+
+					},
+					fail: function() {
+						// let confirm_transfer_modal = M.Modal.getInstance($('#confirm-transfer-modal'));
+						confirm_transfer_modal.close(); 
+					},
+					always: function() {
+						$("#confirm-transfer-btn").attr('disabled', false)
+						$("#cancel-transfer-btn").attr('disabled', false)
+					}
+				})
+
+
+			}
+
+			$(document).on('click', '.dial-pad-transfer-checkout-btn', function(){
+
+				// let confirm_transfer_modal = M.Modal.getInstance($('#confirm-transfer-modal'));
+				// confirm_transfer_modal.open();  
+				
+				transfer_check_out();
+
+
+			})
+
+			$('#dismiss-transfers-page').on('click', function(){
+				$('#contacts-page').fadeOut();
+			})
+
+			$('.service-topup').on('click', function(){
+
+				localStorage.setItem('service_type', 'bill_payment')
+				$('#contacts-page-heading').text('Top Up')
+
+				let sidenav = document.querySelector('.sidenav');
+				let instance = M.Sidenav.getInstance(sidenav);
+				instance.close();
+
+				// $('.contacts-loader-wrap').css({'display':'flex'})
+				/*
+				$('#dialpad-inner-wrap').html(`
+					<div class="input-field col s12">
+						<input value="" id="dialpad-tab-topup-num" type="tel" class="validate">
+						<label class="active" for="dialpad-tab-topup-num">Enter Number</label>
+					</div>
+					<div class="input-field col s12">
+						<input value="" id="dialpad-tab-topup-amount" type="number" class="validate">
+						<label class="active" for="dialpad-tab-topup-amount">Enter Amount</label>
+					</div>			
+					<div class="col s12 select-funding-source btn-flat" style="border-bottom: 1px solid #9e9e9e; margin-bottom: 10px; padding: 10px; height: 46px; width: 100%;">
+						<span style="color: #9e9e9e;">
+							Select Funding Source
+						</span>
+						<i class="material-icons right">arrow_drop_down</i>
+					</div>
+
+					<button class="btn sparco-blue align-center sparco-center-btn dial-pad-topup-checkout-btn">
+						Proceed
+						<i class="material-icons right">arrow_forward</i>
+					</button>	
+				`)
+				*/
+				$('#dialpad-inner-wrap').html(`
+					<div id="dialpad-tab-name-input-wrapper" class="input-field col s12 animated fadeIn slow"  style="display: none;">
+						<input value="" id="dialpad-tab-name" type="text" class="validate">
+						<label class="active" for="dialpad-tab-name">Recipient's Name</label>
+					</div>
+					<div id="dialpad-tab-topup-num-input-wrapper" class="input-field col s12 animated fadeIn slow">
+						<!-- <i class="material-icons prefix">phone</i> -->
+						<input value="" id="dialpad-tab-topup-num" type="tel" class="validate">
+						<label class="active" for="dialpad-tab-topup-num">Recipient's Phone Number</label>
+						<button onclick=getContact() id="get-contact-btn" class="waves-effect waves-light btn-flat sparco-blue white-text" style="position: absolute; top: 5px; right: 0;"><i class="material-icons">contacts</i></button>
+					</div>
+					<div id="dialpad-tab-topup-amount-input-wrapper" class="input-field col s12 animated fadeIn slow" style="display: none;">
+						<input value="" id="dialpad-tab-topup-amount" type="number" class="validate">
+						<label class="active" for="dialpad-tab-topup-amount">Enter Amount(ZMW)</label>
+					</div>
+					<div class="col s12 select-funding-source btn-flat animated fadeIn slow" style="border-bottom: 1px solid #9e9e9e; margin-bottom: 10px; padding: 10px; height: 66px; width: 100%; display: none;">
+						<span style="color: #9e9e9e;">
+							Select Payment Method
+						</span>
+						<i class="material-icons right">arrow_drop_down</i>
+					</div>	
+					<!--		
+					<button class="btn sparco-blue align-center sparco-center-btn dial-pad-topup-checkout-v2-btn animated fadeIn slow">
+						Proceed
+						<i class="material-icons right">arrow_forward</i>
+					</button>	
+					-->
+					<button onclick=topUpCheckOut() class="btn sparco-blue align-center sparco-center-btn dial-pad-topup-checkout-btn">
+						Proceed
+						<i class="material-icons right">arrow_forward</i>
+					</button>	
+					`)
+				M.updateTextFields();
+
+				$('#contacts-page').fadeIn();
+
+				// document.querySelector('.dial-pad-topup-checkout-btn').addEventListener("click", topUpCheckOut, false)
+				// document.querySelector('#get-contact-btn').addEventListener("click", getContact, false)
+
+				// #get-contact-btn
+
+				/*
+				navigator.contactsPhoneNumbers.list(function(contacts) {
+				  console.log(contacts.length + ' contacts found');
+				  for(var i = 0; i < contacts.length; i++) {
+					 console.log(contacts[i].id + " - " + contacts[i].displayName);
+					 for(var j = 0; j < contacts[i].phoneNumbers.length; j++) {
+						var phone = contacts[i].phoneNumbers[j];
+						console.log("===> " + phone.type + "  " + phone.number + " (" + phone.normalizedNumber+ ")");
+
+					 }
+
+					$('#contacts_list').show()
+					$('.contacts-loader-wrap').hide()
+
+					$('#contacts_list').append(`
+						<li class="collection-item avatar">
+							<i class="material-icons circle">perm_identity</i>
+							<span class="title">${ contacts[i].displayName}</span>
+							<p>${contacts[i].phoneNumbers[0].normalizedNumber}</p>
+						</li>   
+						`)
+				  }
+				}, function(error) {
+				  console.error(error);
+				  $('.contacts-loader-wrap').hide();
+				  $('.contacts-error-wrap').css({'display': 'flex'})
+				});
+				*/
+			})
+
+			$('#dismiss-contacts-page').on('click', function(){
+				$('#contacts-page').fadeOut();
+			})
+
+			$('.service-loans').on('click', function(){
+				// $('#loans-page-v2').fadeIn();
+				$("#loan-v2-modal-info").text("Loading...");
+				$("#loan-v2-modal-loader-img").css({display: 'block'})
+				let loan_v2_modal = M.Modal.getInstance($('#loan-v2-modal'));
+				loan_v2_modal.open();  
+				
+				let get_user_loan_info = ()=>{
+					data ={
+						op:1
+					}
+
+					$.ajax({
+						type: 'post',
+						url: `${LOANS_SERVER_URL}/opv2.php?token=${localStorage.getItem('jwt')}`,
+						data: data,
+						success: function (res) {
+							
+							console.log(res);
+							if(res['is_error']){
+								let message = res['message']
+								// $("#loan-v2-modal-info").text(`${message}`);
+								$("#loan-v2-modal-info").html(`${message}`);
+								// $("#loan-v2-modal-loader-img").css({display: 'none'})
+								$('#loan-v2-modal-loader-img').fadeOut()
+								return;
+							}
+
+							let msisdn = res.phone
+							$('#dialpad-tab-loans-v2').val(msisdn)
+							// $('#dialpad-tab-loans-v2').attr('disabled', true)
+							// $('#dialpad-tab-loans-v2').attr('disabled', true)
+							// || msisdn.startsWith('097')  || msisdn.startsWith('077') || msisdn.startsWith('095')
+							/*
+							if(!(msisdn.startsWith('096') || msisdn.startsWith('076') || msisdn.startsWith('098')  || msisdn.startsWith('077') || msisdn.startsWith('095'))){
+								// alert('Only MTN Money Numbers Supported')
+								$('#loan-v2-modal-info').html(`We are unable to send money to your number ${msisdn}.<br/>Only MTN, Airtel and Zamtel Numbers Are Supported`)
+								$('#loan-v2-modal-loader-img').fadeOut()
+								return;
+							}
+							*/
+							// let message = "";
+							if(res['is_error'] && (res['status_code'] == 405)){
+								$("#loan-v2-modal-info").text("You're not eligible for loans");
+								$("#loan-v2-modal-loader-img").css({display: 'none'})
+								return;
+							}
+							loan_v2_modal.close();  
+							$('#loans-page-v2').fadeIn();
+							if(res['user_is_owing']){
+								// message = `Hi ${res['first_name']}, You're currently not eligible to get a payday loan due to an outstanding loan of ZMW ${res['amount_owing']} due on the  ${res['due_date']}`;
+								// message = `Hi ${res['first_name']}, You're currently not eligible to get a salary advance due to an outstanding advance of ZMW ${res['amount_owing']} due on your next pay day.`;
+								$("#dialpad-tab-loans-v2").attr('disabled', true)
+								$("#get-contact-loans-v2-btn").attr('disabled', true)
+								$("#amount-loans-v2").attr('disabled', true)
+								$(".loan-v2-checkout-btn").attr('disabled', true)
+								
+							}else{
+								// message = `Hi ${res['first_name']}, You're eligible to get a salary advance of up to ZMW ${res['max_borrowing_amount']}, You repayment will be  ZMW ${res['max_borrowing_amount']} + ${res['company']['interest']}%`;
+								$("#dialpad-tab-loans-v2").attr('disabled', true)
+								// $("#get-contact-loans-v2-btn").attr('disabled', false)
+								$("#amount-loans-v2").attr('disabled', false)
+								$(".loan-v2-checkout-btn").attr('disabled', false)
+							}
+							
+							$("#amount-loans-v2").data('max-borrowing-amount',res['max_borrowing_amount'] )
+							$("#amount-loans-v2").data('interest',res['company']['interest'] )
+							
+							$('#loans-v2-info').text(res['page_msg']);
+
+							M.updateTextFields();
+						}
+					})
+				}
+
+				get_user_loan_info()
+
+			})
+			// $('.service-loans').click()
+
+			function onConfirmLoan(btnIndex=1) {
+				// alert("You selected button number " + buttonIndex + " and entered ");
+				$('.loan-v2-checkout-btn').attr('disabled', true);
+				let loan_amount = $("#amount-loans-v2").val();
+				let loan_momo_num = $("#dialpad-tab-loans-v2").val();
+				if(btnIndex == 1){
+					data ={
+						op:2,
+						amount: loan_amount,
+						msisdn: loan_momo_num,
+					}
+					$.ajax({
+						type: 'post',
+						// url: `https://sparco-loans-api.herokuapp.com/opv2.php?token=${localStorage.getItem('jwt')}`,
+						url: `${LOANS_SERVER_URL}/opv2.php?token=${localStorage.getItem('jwt')}`,
+						data: data,
+						success: function (res) {
+							// alert(JSON.stringify(res))
+							console.log(res);
+
+							let message = `${res['message']}`;
+
+							$('#loans-v2-info').text(message);
+
+						}
+					})
+					.fail((err)=>{
+						M.toast({html: 'Error reaching server. Please try again later.'});
+					})
+					.always(()=>{
+						$('.loan-v2-checkout-btn').attr('disabled', true);
+					})
+				}else{
+					$('.loan-v2-checkout-btn').attr('disabled', false);
+				}
+			}
+
+			$(document).on('click', '.loan-v2-checkout-btn',function() {
+				let loan_momo_num = $("#dialpad-tab-loans-v2").val();
+				let loan_amount = $("#amount-loans-v2").val();
+				let loan_interest = $("#amount-loans-v2").data('interest');
+				// let amount_owing = parseFloat(loan_amount) + (parseFloat(loan_amount) * (parseFloat(loan_interest)/100))
+				// alert(amount_owing.toFixed(2))
+				// return
+				$(this).attr('disabled', true);
+
+				data ={
+					op:3,
+					amount: loan_amount
+				}
+				$.ajax({
+					type: 'post',
+					// url: `https://sparco-loans-api.herokuapp.com/opv2.php?token=${localStorage.getItem('jwt')}`,
+					url: `${LOANS_SERVER_URL}/opv2.php?token=${localStorage.getItem('jwt')}`,
+					data: data,
+					success: function (res) {
+						// alert(JSON.stringify(res))
+						// console.log(res);
+
+						let confirm_output = `
+						<h4 style="text-align: center">Continue?</h4>
+						<p style="text-align: center" id='confirmaton-status-msg'>
+							You are about to be credited with ZMW ${loan_amount} at the interest rate of ${res['interest']}%.	
+						</p>
+						<p style="text-align: center" id='2ndconfirmaton-status-msg'>
+							The maximum amount you can request for a salary advance is ${res['max_borrowing_amount']}	
+						</p>
+						<p style="text-align: center" id='due-date'>
+							ZMW ${res['amount_due']} will be collected on your next pay date
+						</p>
+						<div class="row">
+							<div class="col s3">
+								<button id="confirm-loan-btn" type="button" class="btn btn-success">Proceed</button>
+							</div>
+							<div class="col s3"></div>
+							<div class="col s3">
+								<button id="cancel-loan-btn" type="button" class="btn red darken">Cancel</button>
+							</div>
+						</div>
+						`
+						if(res['is_error']){
+							confirm_output = `
+							<h4 style="text-align: center">Error</h4>
+							<p style="text-align: center" id='confirmaton-status-msg'>${res['message']}</p>
+							<div class="row">
+								<button id="cancel-loan-btn" type="button" class="btn red darken" style="margin: auto !important; display: block !important;">Cancel</button>
+							</div>
+							`
+						}
+						
+
+
+						
+
+						$('#inner-loan-status-info-wrap').html(confirm_output)
+
+						//$("#confirmaton-status-msg").text(`You are about to be credited with ZMW ${loan_amount} at the interest rate of ${res['interest']}%.`);
+						//$("#2ndconfirmaton-status-msg").text(`The maximum amount you can request to loan is ${res['max_borrowing_amount']}`);
+						//$("#due-date").text(`ZMW ${res['amount_due']} will be collected on your next pay date`);
+						$("#confirm-loan-modal").modal({
+							dismissible: false
+						});
+						let confirm_loan_modal = M.Modal.getInstance($('#confirm-loan-modal'));
+
+						// if(res["is_error"] == true){
+						// 	// alert(res["message"])
+						// 	// return;
+						// }else{
+							confirm_loan_modal.open();
+							$('#confirm-loan-btn').on('click', function(){
+								confirm_loan_modal.close();
+								onConfirmLoan()
+								
+							})
+
+							$('#cancel-loan-btn').on('click', function(){
+								confirm_loan_modal.close();
+								$("#confirmaton-status-msg").empty();
+								$("#2ndconfirmaton-status-msg").empty();
+								$("#due-date").empty();
+								return;
+							})
+						// }
+
+						// navigator.notification.confirm(
+						// 	`You are about to be credited with ZMW ${loan_amount} at the interest rate of ${res['interest']}%. ZMW ${res['amount_due']} will be collected on ${res['due_date']}`,  // message
+						// 	onConfirmLoan,                    // callback to invoke
+						// 	'Confirm Loan Request',           // title
+						// 	['Confirm','Cancel'],             // buttonLabels
+						// 	// 'Jane Doe'                 	  // defaultText
+						// );
+					}
+				})
+				.fail((err)=>{
+					M.toast({html: 'Error reaching server. Please try again later.'});
+				})
+				.always(()=>{
+					$(this).attr('disabled', false);
+				})
+
+			})
+
+			$('.service-data').on('click',function(){
+
+				localStorage.setItem('service_type', 'bill_payment')
+
+				let data_modal = M.Modal.getInstance($('#data-modal'));
+				data_modal.open();  
+				// let coming_soon_modal = M.Modal.getInstance($('#coming-soon-modal'));
+				// coming_soon_modal.open();  
+			})
+
+			function datapage(){
+				$('#dialpad-inner-wrap').html(`
+					<div id="dialpad-tab-name-input-wrapper" class="input-field col s12 animated fadeIn slow"  style="display: none;">
+						<input value="" id="dialpad-tab-name" type="text" class="validate">
+						<label class="active" for="dialpad-tab-name">Recipient's Name</label>
+					</div>
+					<div id="dialpad-tab-topup-num-input-wrapper" class="input-field col s12 animated fadeIn slow">
+						<!-- <i class="material-icons prefix">phone</i> -->
+						<input value="" id="dialpad-tab-topup-num" type="tel" class="validate">
+						<label class="active" for="dialpad-tab-topup-num">Recipient's Phone Number</label>
+						<button onclick=getContact() id="get-contact-btn" class="waves-effect waves-light btn-flat sparco-blue white-text" style="position: absolute; top: 5px; right: 0;"><i class="material-icons">contacts</i></button>
+					</div>
+					<!--
+					<div id="dialpad-tab-topup-amount-input-wrapper" class="input-field col s12 animated fadeIn slow" style="display: none;">
+						<input value="" id="dialpad-tab-topup-amount" type="number" class="validate">
+						<label class="active" for="dialpad-tab-topup-amount">Enter Amount(ZMW)</label>
+					</div>
+					-->
+					<!--
+					<div class="input-field col s12 animated fadeIn slow" id="dialpad-tab-topup-amount-input-wrapper" style="display: none;">
+						<select id="dialpad-tab-topup-amount-input" required>
+							<option value="" disabled selected>Select Data Voucher</option>
+							<option value="1">2 ZMW 20MB Data(Daily)</option>
+							<option value="2">5 ZMW 200MB Data(Daily)</option>
+							<option value="3">7 ZMW 350MB Data(Daily)</option>
+							<option value="4">25 ZMW 1GB Data(Week)</option>
+							<option value="5">50 ZMW 2500MB Data(Week)</option>
+						</select>
+						<label>Province/State</label>
+					</div>
+					-->
+					<div  id="dialpad-tab-topup-amount-input-wrapper" class="col s12 select-data-bundle btn-flat animated fadeIn slow" style="border-bottom: 1px solid #9e9e9e; margin-bottom: 10px; padding: 10px; height: 66px; width: 100%; display: none;">
+						<input value="" id="dialpad-tab-topup-amount" type="hidden" class="validate">
+						<span style="color: #9e9e9e; text-transform: capitalize;">
+							Select Data Bundle
+						</span>
+						<i class="material-icons right">arrow_drop_down</i>
+					</div>	
+					<div class="col s12 select-funding-source btn-flat animated fadeIn slow" style="border-bottom: 1px solid #9e9e9e; margin-bottom: 10px; padding: 10px; height: 66px; width: 100%; display: none;">
+						<span style="color: #9e9e9e; text-transform: capitalize;">
+							Select Payment Method
+						</span>
+						<i class="material-icons right">arrow_drop_down</i>
+					</div>	
+					<!--		
+					<button class="btn sparco-blue align-center sparco-center-btn dial-pad-topup-checkout-v2-btn animated fadeIn slow">
+						Proceed
+						<i class="material-icons right">arrow_forward</i>
+					</button>	
+					-->
+					<button onclick=topUpCheckOut() class="btn sparco-blue align-center sparco-center-btn dial-pad-topup-checkout-btn">
+						Proceed
+						<i class="material-icons right">arrow_forward</i>
+					</button>	
+					`)
+				M.updateTextFields();
+
+				$('select').formSelect();
+
+				$('#contacts-page').fadeIn();
+
+				let data_modal = M.Modal.getInstance($('#data-modal'));
+				data_modal.close(); 
+			}
+
+			$('#mtndata-topup').on('click', function(){
+
+				localStorage.setItem('service_type', 'bill_payment')
+				$('#contacts-page-heading').text('MTN Data Top Up')
+				
+				datapage()
+				
+				$("#dialpad-tab-topup-num").data("isData", true)
+				$("#dialpad-tab-topup-num").data("dataType", "mtn")
+			})
+			// $('#mtndata-topup').click()
+
+			$('#liquiddata-topup').on('click', function(){
+
+				localStorage.setItem('service_type', 'bill_payment')
+				$('#contacts-page-heading').text('LiTESPEED Data Top Up')
+
+				datapage()
+
+				$("#dialpad-tab-topup-num").data("isData", true)
+				$("#dialpad-tab-topup-num").data("dataType", "liquid")
+			})
+			// $('#liquiddata-topup').click()
+
+			$(document).on('click','.select-data-bundle', function(){
+				let data_bundles_modal = M.Modal.getInstance($('#data-bundles-modal'));
+				data_bundles_modal.open();
+
+				$.get(`${SERVER_URL}/get-data-bundles.php`,{network: $("#dialpad-tab-topup-num").data("dataType")},function(res){
+					let dataBundlesHtml = ''
+					res.forEach(function(dataBundle){
+						dataBundlesHtml += `
+						<li data-value="${dataBundle['voucherValue']}" data-voucher-type="${dataBundle['voucherType']}" class="collection-item data-bundle-option">${dataBundle['currency']} ${dataBundle['voucherValue']} <span class="blue-text text-darken-2">${dataBundle['dataQty']}${dataBundle['dataUnit']} ${dataBundle['voucherType']}</span></li>
+						`
+					})
+					$('#data-bundles-list').html(dataBundlesHtml)
+				})
+				.fail(function(err){
+					M.toast({html: `Error: ${err.statusText}`})
+					// alert(JSON.stringify(err))
+				})
+
+				// getDataBundlesList(); //TODO
+			})
+			// $('.select-data-bundle').click()
+
+			$(document).on('click', '.data-bundle-option', function(){
+				// let amount =$('.data-bundle-option').data('value');
+				let amount =$(this).data('value');
+				let voucher_type =$(this).data('voucher-type');
+				$('#dialpad-tab-topup-amount-input-wrapper>span').text($(this).text())
+				$('#dialpad-tab-topup-amount').val(amount)
+				$('#dialpad-tab-topup-amount').data('voucher-type', voucher_type)
+
+				let data_bundles_modal = M.Modal.getInstance($('#data-bundles-modal'));
+				data_bundles_modal.close();
+			})
+
+			$('.service-tv').on('click', function(){
+
+				localStorage.setItem('service_type', 'bill_payment')
+
+				// $('#contacts-page').fadeIn();
+				let tv_modal = M.Modal.getInstance($('#tv-modal'));
+				tv_modal.open();
+
+			})
+
+			$('#dstv-topup').on('click',function(){
+				let tv_modal = M.Modal.getInstance($('#tv-modal'));
+				tv_modal.close();
+
+				$('#tv-service-input').val('DStv')
+
+				$('#tv-topup-page').fadeIn();
+				return;
+
+
+				let tv_topup_modal = M.Modal.getInstance($('#tv-top-up-modal'));
+				tv_topup_modal.open();
+
+				localStorage.setItem('openmodal', 'tvtopupmodal')
+				
+
+				// Test Smartcard Number
+				// $('#smart-card-number-input').val("42906098506")
+			})
+
+			$('#gotv-topup').on('click',function(){
+				let tv_modal = M.Modal.getInstance($('#tv-modal'));
+				tv_modal.close();
+
+				$('#tv-service-input').val('GOtv')
+
+				$('#tv-topup-page').fadeIn();
+				return;
+
+				let tv_topup_modal = M.Modal.getInstance($('#tv-top-up-modal'));
+				tv_topup_modal.open();
+
+				localStorage.setItem('openmodal', 'tvtopupmodal')
+
+				// Test IUC Number 
+				// $('#smart-card-number-input').val("4623909324")
+			})
+
+			$('.service-electricity').on('click', function(){
+
+				localStorage.setItem('service_type', 'bill_payment')
+
+				$('#electricity-topup-page').fadeIn();
+				return;
+
+				// $('#contacts-page').fadeIn();
+				let electricity_modal = M.Modal.getInstance($('#electricity-modal'));
+				electricity_modal.open();
+
+				localStorage.setItem('openmodal', 'electricitytopupmodal')
+
+			})
+			// $('.select-funding-source').on('click',function(){
+			// 	let funding_source_modal = M.Modal.getInstance($('#funding-source-modal'));
+			// 	funding_source_modal.open();
+			// })
+			$(document).on('click','.select-funding-source',function(){
+				// let saved_pms = get_saved_pms();
+				// $('#saved-pm-list').html(saved_pms);
+			
+				// get_saved_pms()
+				// let funding_source_modal = M.Modal.getInstance($('#funding-source-modal'));
+				// funding_source_modal.open();
+
+				let pm_type_modal = M.Modal.getInstance($('#pm-type-modal'));
+				pm_type_modal.open();
+			})
+
+			$(document).on('click','.payment-method', function(){
+				let funding_source_modal = M.Modal.getInstance($('#funding-source-modal'));
+				funding_source_modal.close();
+				// console.log($(this).text())
+				$('.select-funding-source > span').text($(this).text())
+				// console.log($(this).data('payment-method-id'))
+				$('.select-funding-source').data('payment-method-id', $(this).data('payment-method-id'))
+			})
+
+			$('#add-card-pm').on('click', function(){
+				/*
+				let openmodal = localStorage.getItem('openmodal')
+
+				if(openmodal == 'tvtopmodal'){
+					let tv_topup_modal = M.Modal.getInstance($('#tv-top-up-modal'));
+					tv_topup_modal.close();
+				}
+
+				if(openmodal == 'electricitytopupmodal'){
+					let electricity_modal = M.Modal.getInstance($('#electricity-modal'));
+					electricity_modal.close();
+				}
+				*/
+
+				let pm_type_modal = M.Modal.getInstance($('#pm-type-modal'));
+				pm_type_modal.close();
+				// alert('add Card')	
+				// let card_details_modal = M.Modal.getInstance($('#card-details-modal'));
+				// card_details_modal.open();
+
+				let top_up_amount = $('#final-top-up-amount-input').val();
+				let top_up_network = $('#final-top-up-network-input').val();
+				let top_up_pm = $('#final-top-up-pm');
+				let top_up_num = $('#final-top-up-num-input').val();
+
+				let top_up_data = JSON.stringify({
+					'top_up_num':top_up_num,
+					'top_up_network':top_up_network,
+					'top_up_amount':top_up_amount,
+				})
+
+				// console.log(top_up_data)
+
+				localStorage.setItem("top_up_data", top_up_data)
+
+				// let top_up_modal = M.Modal.getInstance($('#top-up-modal'));
+				// top_up_modal.close();
+
+				// $('#add-card-page').css({'display':'block'})
+				$('#add-card-page').fadeIn()
+
+				// Test Card Data 
+				// $('#cc-num').val('5399 8383 8383 8381')
+				// $('#cc-name').val('Mundia Mwala')
+				// $('#cc-expiry').val('08/24')
+				// $('#cvc').val('470')
+
+
+				// let ccp = M.Modal.getInstance($('#add-card-page'));
+				// ccp.open()
+			})
+
+			function openMoMoModal(placeholder) {
+
+				$("#mtn-money-number-input").attr("placeholder", placeholder)
+
+				let service_type = localStorage.getItem('service_type')
+				/*
+				if(service_type == 'money_transfer'){
+					alert('You can only send money from a card.')
+					return
+				}
+				*/
+				let pm_type_modal = M.Modal.getInstance($('#pm-type-modal'));
+				pm_type_modal.close();
+				// alert('add MTN Money')
+				// let card_details_modal = M.Modal.getInstance($('#card-details-modal'));
+				// card_details_modal.open();
+				let mtn_money_details_modal = M.Modal.getInstance($('#add-mtn-money-modal'));
+				mtn_money_details_modal.open(); 	
+			}
+
+			$('#add-mtn-pm').on('click', function(){
+				openMoMoModal("MTN Money Number")
+			})
+
+			$('#add-zamtel-pm').on('click', function(){
+				openMoMoModal("Zamtel Kwacha Number")
+			})
+
+			$('#add-airtel-pm').on('click', function(){
+				alert("Coming Soon")
+				let pm_type_modal = M.Modal.getInstance($('#pm-type-modal'));
+				// pm_type_modal.close();
+			})
+
+			$('#add-mpesa-pm').on('click', function(){
+				alert("Coming Soon")
+				let pm_type_modal = M.Modal.getInstance($('#pm-type-modal'));
+				// pm_type_modal.close();
+			})
+
+			$('#cc-form').on('submit',function(e) {
+				e.preventDefault();
+			})
+
+			$('#close-code-input-page').on('click',function() {
+				$('#code-input-page').fadeOut();
+				$('#login-page').css({'display': 'flex'});
+
+			})
+
+			$('#logout-btn').on('click',function(){
+				let sidenav = document.querySelector('.sidenav');
+				
+				let instance = M.Sidenav.getInstance(sidenav);
+				instance.close();
+
+
+				localStorage.clear();
+				sessionStorage.clear();
+
+				$('#login-page').css({'display': 'flex'});
+				$('#home-page').css({'display': 'none'}); 
+			})
+
+			$(document).on('click','.topup-checkout-btn', function() {
+				// alert('Process Top')
+				let top_up_amount = $('#final-top-up-amount-input').val();
+				let top_up_network = $('#final-top-up-network-input').val();
+				let top_up_pm = $('#final-top-up-pm');
+				let top_up_num = $('#final-top-up-num-input').val();
+
+				let pm_id = $('#final-top-up-pm').data('payment-method-id');
+
+				// console.log(`PM ID: ${pm_id}`)
+				// console.log(`Top Up Num: ${top_up_num}`)
+				// console.log(`Top Up Network: ${top_up_network}`)
+				// console.log(`Top Up Amount: ${top_up_amount}`)
+
+				if (!top_up_amount) {
+					alert('Top Up amount is required.')
+					return;
+				}
+				if (!pm_id) {
+					alert('Funding Source is required.')
+					return;
+				}
+
+				//For MTN Data TopUp
+				let voucher_type = ''
+				try {
+					voucher_type = $('#dialpad-tab-topup-amount').data('voucher-type')
+				} catch (error) {
+					// voucher_type = ''
+				}
+				
+
+				// TODO
+				// !!!PROCESS SAVED PM
+				let top_up_data = JSON.stringify({
+					'pmid':pm_id,
+					'topupnumber':top_up_num,
+					'service':top_up_network,
+					'topupamount':top_up_amount,
+					'vouchertype': voucher_type
+				})
+				localStorage.setItem('top_up_data',top_up_data)
+
+
+				// pay_with_saved_pm()
+
+				if (pm_id == 'new') {
+					console.log('pay with unsaved pm')
+					// pay_with_unsaved_pm(save_payment_method='false')
+					show_save_pm_dialog()
+				}else{
+					console.log('pay with saved pm')
+					pay_with_saved_pm()
+				}
+
+				// console.log(top_up_data)
+
+				// localStorage.setItem("top_up_data", top_up_data)
+
+				// localStorage.setItem("has_step_after_pm_add", "yes")
+			})
+
+			// $(document).on('click','.dial-pad-topup-checkout-btn',function(e) {
+	
+			$(document).on('click','.add-pm-btn',function(){
+				let funding_source_modal = M.Modal.getInstance($('#funding-source-modal'));
+				funding_source_modal.close();
+
+				let pm_type_modal = M.Modal.getInstance($('#pm-type-modal'));
+				pm_type_modal.open();
+			})
+
+			//!!DEPLETED
+			$(document).on('click','.add-card-btn', function() {
+				$('#add-card-page').fadeOut()
+				let cc_num = $('#cc-num').val()
+				let cc_name = $('#cc-name').val()
+				let cc_expiry = $('#cc-expiry').val()
+				let cvc = $('#cvc').val()
+
+				// let top_up_data = localStorage.getItem('top_up_data');
+
+				let cc_data = {
+					'ccnum':cc_num,
+					'ccexpiry':cc_expiry,
+					'cvc':cvc,
+				}
+				add_cc_data(cc_data)
+			})
+
+			function add_cc_data(cc_data){
+				// alert(JSON.stringify(cc_data))
+				let {ccnum} = cc_data
+				// alert(ccnum)
+				// return
+
+				localStorage.setItem('cc_data',JSON.stringify(cc_data))
+				localStorage.setItem('paymentmethod','card')
+
+				// Note
+				// if payment-method-id == 0 then the pm is not saved
+				let partial_cc_num = `••••${ccnum.replace(/ /g, '').slice(-4)}`
+				$('.select-funding-source > span').text(partial_cc_num)
+				$('.select-funding-source').data('payment-method-id', 'new')
+
+				// console.log(cc_num)
+				// console.log(cc_name)
+				// console.log(cc_expiry)
+				// console.log(cvc)
+				// console.log(top_up_data)
+				// TODO
+				// !!!PROCESS PAYMENT UNSAVED
+
+				$('#add-card-page').fadeOut()
+
+				// let ccp = M.Modal.getInstance($('#add-card-page'));
+				// ccp.close()
+
+				// if (localStorage.getItem('top_up_modal_is_next') == 'yes') {
+
+				// }
+			}
+
+			window.addEventListener("message", receiveMessage, false);
+
+			function receiveMessage(event) {
+				let data = event.data
+				// console.log(JSON.stringify(event.data))
+
+				if (data.action == 'add_cc_data') {
+					add_cc_data(data.cc_data)
+					// $('#add-card-page').fadeOut()
+					/*
+					let openmodal = localStorage.getItem('openmodal');
+
+					if(openmodal == 'tvtopupmodal'){
+						let tv_topup_modal = M.Modal.getInstance($('#tv-top-up-modal'));
+						tv_topup_modal.open();
+					}
+					
+
+					if(openmodal == 'electricitytopupmodal'){
+						let electricity_modal = M.Modal.getInstance($('#electricity-modal'));
+						electricity_modal.open();
+					}
+					*/
+
+				}
+
+			}
+
+			$(document).on('click','.add-momo-btn', function() {
+				let momo_num = $('#mtn-money-number-input').val()
+
+				if (!momo_num) {
+					alert('Mobile Money Number is required');
+					return;
+				}
+
+				localStorage.setItem('momo_number', momo_num)
+				localStorage.setItem('paymentmethod','mobilemoney')
+
+				$('.select-funding-source > span').text(`Mobile Money ${momo_num}`)
+				$('.select-funding-source').data('payment-method-id', 'new')
+
+				let mtn_money_details_modal = M.Modal.getInstance($('#add-mtn-money-modal'));
+				mtn_money_details_modal.close(); 
+
+			})
+			
+			// Electricity
+			// Untested
+			// $(document).on('click','#meter-number-btn', function(){
+			// $('#meter-number-btn').on('click',function(){
+
+			// TV
+			$(document).on('click', '#check-tv-balance-btn', function(){
+
+				$('#tv-loading-wrap').html(`
+				<img src="img/dloading.gif" height="40" />
+				`)
+
+				let service = $('#tv-service-input').val()
+				let smart_card_num = $('#smart-card-number-input').val()
+
+				$('#check-tv-balance-btn').attr('disabled', false)
+
+				$.getJSON(`${SERVER_URL}/543/tv_topup.php`, {
+					operation: 'getbalance',
+					serviceProvider: service,
+					smartCardNum: smart_card_num
+				}).done(function (data) {
+					// var top_up_amount = prompt("Enter amount to top up:",data['amountDue']);
+
+					let amount_due = data['amountDue']
+					$('#tv-amount-due-input').val(amount_due)
+
+					$('#tv-amount-due-input').css({'display':'block'})
+					$('#tv-loading-wrap').empty()
+
+					$('#check-tv-balance-btn').attr('disabled', true)
+					$('#check-tv-balance-btn').fadeOut()
+					$('#smart-card-number-btn').css({'display':'block'})
+
+					$('#tv-modal-select-funding-source').css({'display':'block'})
+
+					/*
+					console.log(JSON.stringify(data))
+					let msg = ''
+					if (parseInt(amountDue) > 0) {
+						msg = `
+						<p>
+						    The amount due is: <b>ZMW ${amountDue}</b>
+						</p>
+						`
+					}else{
+						amountDue = ''
+					}
+
+					$('#modalservice > .modal-content').html(`
+						${msg}
+						<input id="top-up-amount-input" type="number" class="validate" placeholder="Enter Amount Number" value="${amountDue}">
+						<input id="service-input" type="hidden" value="${service}">
+						<input id="smart-card-number-input" type="hidden" value="${smartCardNum}">
+						<button id="tv-pay-btn" class="btn waves-effect waves-light">proceed
+							<i class="material-icons right">arrow_forward</i>
+						</button>
+					`)
+
+					*/
+				});
+			})
+
+			$(document).on('click', '#tv-modal-select-funding-source', function(){
+				// let service = $('#tv-service-input').val()
+				// let smart_card_num = $('#smart-card-number-input').val()
+				// let pm_id = $('.select-funding-source').data('payment-method-id')
+			})
+
+			$('#smart-card-number-btn').on('click', function(){
+				let smart_card_num = $('#smart-card-number-input').val()
+				let service = $('#tv-service-input').val()
+				let top_up_amount = $('#tv-amount-due-input').val()
+				let pm_id = $('.select-funding-source').data('payment-method-id')
+
+				if (!pm_id) {
+					alert('Funding Source is required.')
+					return;
+				}
+				if (!smart_card_num) {
+					alert('Smart card number is required.')
+					return;
+				}
+
+				if (!top_up_amount) {
+					alert('Top Up amount is required.')
+					return;
+				}
+				let top_up_data = JSON.stringify({
+					'pmid':pm_id,
+					'topupnumber':smart_card_num,
+					'service':service,
+					'topupamount':top_up_amount,
+					'vouchertype': ''
+				})
+
+				localStorage.setItem('top_up_data',top_up_data)
+				if (pm_id == 'new') {
+					console.log('pay_with_unsaved_pm')
+					// pay_with_unsaved_pm(save_payment_method='false')
+					show_save_pm_dialog()
+				}else{
+					pay_with_saved_pm()
+				}
+			})
+
+			$(document).on('click', '.complete-profile-btn', function(){
+
+		        let fname = $("#complete-profile-fname").val();
+		        let lname = $("#complete-profile-lname").val();
+		        let email = $("#complete-profile-email").val();
+		        let dob = $("#complete-profile-dob").val();
+		        let sex = $("#complete-profile-sex").val();
+				let province = $("#complete-profile-province").val();
+				let city = $("#complete-profile-town").val();
+				let country = $("#complete-profile-country").val();
+
+				if (fname == "") {
+		            alert("Please enter your first name!");
+		            return;
+		        }
+		        if (lname == "") {
+		            alert("Please enter your last name!");
+		            return;
+		        }
+		        if (email == "") {
+		            alert("Please enter your email address!");
+		            return;
+		        }
+				
+
+		        if (validateEmail(email)) {
+
+		        	$('.complete-profile-btn').prop('disabled', true)
+
+		            $.post(`${SERVER_URL}/complete-profile.php?token=${localStorage.jwt}`, {
+		                // task: 'sign_up',
+		                fname: fname,
+		                lname: lname,
+		                email: email,
+		                dob: dob,
+		                sex: sex,
+		                city: city,
+		                province: province,
+		                country: country,
+		                // phone: localStorage.getItem("sparco_account_number"),
+		                // pass_code: localStorage.getItem("sparco_account_activation_code")
+		            }).done(function (res) {
+						// console.log(res);
+						// return;
+						
+		            	$('#complete-profile-page').css({'display':'none'})
+		            	$('#code-input-page').css({'display':'none'})
+
+						localStorage.setItem("is_profile_complete", res.is_profile_complete)
+
+		            	$("#home-page").fadeIn();
+
+		                console.log('sign_up response');
+		                console.log(res);
+		                // localStorage.setItem("profile_is_complete", true)
+		                // localStorage.setItem("account_first_name", fname);
+		                // localStorage.setItem("account_last_name", lname);
+		                // localStorage.setItem("account_email", email);
+		                // localStorage.setItem("jwt", res['token']);
+
+
+		                // $("#overlay").hide();
+		                setTimeout(function () {
+		                    // if (service) {
+		                    //     buy_service(service);
+		                    // }
+
+		                }, 100);
+
+		            }).fail(function(err){
+						console.log(err)
+					}).always(function(){
+						$('.complete-profile-btn').prop('disabled', false)
+					})
+
+
+		        } else {
+		            alert("Please check the format of your email address!");
+		            return;
+		        }
+			})
+
+			// $("#complete-profile-province").change(function(){
+			// 	//TODO: get districts from db 
+			// 	let province_id = $( "#complete-profile-province option:selected" ).val();
+			// 	console.log(province_id);
+
+			// 	if(province_id == 'other'){
+			// 		$('#complete-profile-location-select-wrap').css({display: 'none'})
+			// 		$('#complete-profile-location-wrap').html(`
+			// 		<div class="input-field col s12">
+			// 			<input type="text"  id="complete-profile-city" required>
+			// 			<label class="active" for="complete-profile-city">City</label>
+			// 		</div>
+			// 		<div class="input-field col s12">
+			// 			<input type="text"  id="complete-profile-country" required>
+			// 			<label class="active" for="complete-profile-country">Country</label>
+			// 		</div>
+			// 		`)
+			// 	}else{
+			// 		$('#complete-profile-location-select-wrap').css({display: 'block'})
+			// 		$('#complete-profile-location-wrap').html(``)
+			// 	}
+
+
+			// 	// $('#complete-profile-town').attr('disabled', true);
+			// 	$.get(`${SERVER_URL}/towns.php`,{pid: province_id}, (towns)=>{
+			// 		console.log(towns);
+
+			// 		let towns_output = '<option value="" disabled selected>Choose Your Location</option>';
+			// 		towns.forEach((town)=>{
+			// 			towns_output += `
+			// 			<option value="${town['town_name']},${town['province_name']},Zambia">${town['town_name']}</option>
+			// 			`
+			// 		})
+			// 		// towns_output += `
+			// 		// 	<option value="other">Other</option>
+			// 		// `
+			// 		$('#complete-profile-location-select').html(towns_output);
+			// 		$('#complete-profile-location-select').formSelect();
+
+
+			// 	})
+			// 	.fail((err)=>{
+
+			// 	})
+			// 	.always(()=>{
+			// 		// $('#complete-profile-town').attr('disabled', false);
+			// 		// $('#complete-profile-town').removeAttr('disabled', 'disabled');
+			// 	})
+			// })
+
+			// Address Verification
+			$(document).on('click', '#addr-auth-btn', function(){
+
+                let addr_auth_page = M.Modal.getInstance($('#addr-auth-page'));
+                addr_auth_page.close(); 
+
+                let save_payment_method = $('#savepm-input').val()
+
+                pay_with_unsaved_pm(save_payment_method, is_addr_auth=true)
+
+			})
+
+
+			$(document).on('click', '#test-contact-picker-btn', function(){
+				// alert('test')
+
+				// http://phonegap-plugins.com/plugins/kolwit/com.kolwit.pickcontact
+				window.plugins.PickContact.chooseContact(function (contactInfo) {
+					setTimeout(function () { // use time-out to fix iOS alert problem
+						alert(contactInfo.displayName + " " + contactInfo.emailAddress + " " + contactInfo.phoneNr );
+					}, 0);
+				});
+			})
+
+			// $(document).on('touchend','#get-contact-btn', function(){
+
+			$(document).on('click', '.dial-pad-topup-checkout-v2-btn', function(){
+
+				if($('#dialpad-tab-name-input-wrapper').css('display') == 'none'){
+					$('#dialpad-tab-name-input-wrapper').css('display', 'block')
+					$('#dialpad-tab-topup-amount-input-wrapper').css({display: 'block'})
+					$('.select-funding-source').css({display: 'block'})
+					return
+				}
+				alert($('#dialpad-tab-name-input-wrapper').css('display'))
+			})
+	
+	
+			// $('.support-contact-btn').bind(click, function(e) {
+			// 	e.preventDefault()
+			// 	var link = $(e.currentTarget).attr('href');
+			// 	window.open(link, '_system', 'location=yes');
+			// })
+
+
+			var user_phone_input = document.querySelector("#user-phone");
+			iti = window.intlTelInput(user_phone_input,{
+				// nationalMode: true,
+				initialCountry: "zm",
+
+				// nationalMode: false,
+				// autoHideDialCode: true
+				
+				separateDialCode: true,
+			});
+
+	
+		});
+		
+
+		function topUpCheckOut(){
+
+			let top_up_num = $('#dialpad-tab-topup-num').val()
+			let top_up_amount = $('#dialpad-tab-topup-amount').val()
+			let pm_id = $('.select-funding-source').data('payment-method-id')
+
+			if (!top_up_num) {
+				alert('Phone number is required.')
+				return;
+			}
+			/*
+			if($('#dialpad-tab-topup-amount-input-wrapper').css('display') == 'none'){
+				// $('#dialpad-tab-name-input-wrapper').css('display', 'block')
+				$('#dialpad-tab-topup-amount-input-wrapper').css({display: 'block'})
+				$('.select-funding-source').css({display: 'block'})
+				return
+			}
+			*/
+			let service = null
+			if (top_up_num.startsWith("096") || top_up_num.startsWith("076")) {
+				service = 'mtn'
+			}
+			if (top_up_num.startsWith("097")) {
+				service = 'airtel'
+			}
+			if (top_up_num.startsWith("095")) {
+				service = 'zamtel'
+			}
+			if (top_up_num.startsWith("077")) {
+				// service = 'liquid'
+				service = 'airtel'
+			}
+			/*
+			if($("#dialpad-tab-topup-num").data("isData")){
+				if(service == "mtn"){
+					service = 'mtndata'
+				}else{
+					$('#err-modal-heading').text('Invalid Number')
+					$('#err-modal-msg').text(`Only MTN Numbers are supported.`)
+					let error_modal = M.Modal.getInstance($('#error-modal'));
+					error_modal.open(); 
+					return
+				}
+						
+			}
+			*/
+	
+
+			if($("#dialpad-tab-topup-num").data("isData")){
+				let dataType = $("#dialpad-tab-topup-num").data("dataType");
+				if((service == "mtn") && (dataType =="mtn")){
+					service = 'mtndata'
+				}else if((service == "liquid") && (dataType == "liquid")){
+					service = 'liquid'
+				}else{
+					$('#err-modal-heading').text('Invalid Number')
+					$('#err-modal-msg').text(`Only ${(dataType === "mtn")?"MTN":"Hai"} Numbers are supported.`)
+					let error_modal = M.Modal.getInstance($('#error-modal'));
+					error_modal.open(); 
+					return
+				}
+				
+			}
+
+
+			if (!service) {
+				alert('Network not supported')
+				return;
+			}
+
+			if($('#dialpad-tab-topup-amount-input-wrapper').css('display') == 'none'){
+				// $('#dialpad-tab-name-input-wrapper').css('display', 'block')
+				$('#dialpad-tab-topup-amount-input-wrapper').css({display: 'block'})
+				$('.select-funding-source').css({display: 'block'})
+				return
+			}
+
+
+			if (!pm_id) {
+				alert('Funding Source is required.')
+				return;
+			}
+
+
+			if (!top_up_amount) {
+				alert('Top Up amount is required.')
+				return;
+			}
+
+			//For MTN Data TopUp
+			let voucher_type = ''
+			try {
+				voucher_type = $('#dialpad-tab-topup-amount').data('voucher-type')
+			} catch (error) {
+				// voucher_type = ''
+			}
+			 
+
+			// alert(service)
+
+			// TODO
+			// !!!PROCESS SAVED PM
+			let top_up_data = JSON.stringify({
+				'pmid':pm_id,
+				'topupnumber':top_up_num,
+				'service':service,
+				'topupamount':top_up_amount,
+				'vouchertype': voucher_type
+			})
+
+			localStorage.setItem('top_up_data',top_up_data)
+
+			if (pm_id == 'new') {
+				console.log('pay_with_unsaved_pm')
+				// pay_with_unsaved_pm(save_payment_method='false')
+				show_save_pm_dialog()
+			}else{
+				pay_with_saved_pm()
+			}
+		}		
+
+		function getContact(){
+
+			// let permissions = cordova.plugins.permissions;
+			// permissions.checkPermission(permissions.READ_CONTACTS, function( status ){
+			// 	if ( status.checkPermission ) {
+			// 		// console.log('Permission Given')
+
+			// 	}
+			// 	else {
+			// 		permissions.requestPermission(permissions.READ_CONTACTS, function(status) {
+			// 			// alert('success');
+
+
+			// 		}, function() {
+			// 			alert('Contacts Permission Not Given');
+			// 			return;
+			// 		});
+			// 	}
+			// });
+
+
+			// alert('Test')
+			// http://phonegap-plugins.com/plugins/kolwit/com.kolwit.pickcontact
+			// window.plugins.PickContact.chooseContact(function (contactInfo) {
+			// 	setTimeout(function () { // use time-out to fix iOS alert problem
+			// 		alert(contactInfo.displayName + " " + contactInfo.emailAddress + " " + contactInfo.phoneNr );
+			// 	}, 0);
+			// });
+
+			navigator.contacts.pickContact(function(contact){
+				let phoneNumber = contact.phoneNumbers[0].value.replace(/\s+/g, '').replace(/\-/g, '').replace('+260', '0')
+				let topUpNetwork = null
+				if(localStorage.getItem('service_type') == 'bill_payment'){
+					if (phoneNumber.startsWith("096") || phoneNumber.startsWith("076")) {
+						topUpNetwork = 'mtn'
+					}
+					if (phoneNumber.startsWith("097")) {
+						topUpNetwork = 'airtel'
+					}
+					if (phoneNumber.startsWith("095")) {
+						topUpNetwork = 'zamtel'
+					}
+
+					if (phoneNumber.startsWith("077")) {
+						topUpNetwork = 'liquid'
+					}
+
+					if($("#dialpad-tab-topup-num").data("isData")){
+						let dataType = $("#dialpad-tab-topup-num").data("dataType");
+						if((topUpNetwork == "mtn") && (dataType =="mtn")){
+							topUpNetwork = 'mtndata'
+						}else if((topUpNetwork == "liquid") && (dataType == "liquid")){
+							topUpNetwork = 'liquid'
+						}else{
+							$('#err-modal-heading').text('Invalid Number')
+							$('#err-modal-msg').text(`Only ${(dataType === "mtn")?"MTN":"Hai"} Numbers are supported.`)
+							let error_modal = M.Modal.getInstance($('#error-modal'));
+							error_modal.open(); 
+							return
+						}
+						
+					}
+
+					if (topUpNetwork) {
+						$('#dialpad-tab-name').val(contact.displayName)
+						$('#dialpad-tab-name-input-wrapper').css({display: 'block'})
+						$('#dialpad-tab-topup-num').val(phoneNumber)
+						$('#dialpad-tab-topup-amount-input-wrapper').css({display: 'block'})
+						$('.select-funding-source').css({display: 'block'})
+					}else{
+						console.log('Network Not Supported')
+					}
+				}
+
+				if(localStorage.getItem('service_type') == 'money_transfer'){
+					// if (phoneNumber.startsWith("096") || phoneNumber.startsWith("076")) {
+					if ((RegExp(localStorage.allowed_momo_regex)).test(phoneNumber)) {
+						$('#dialpad-tab-name').val(contact.displayName)
+						$('#dialpad-tab-name-input-wrapper').css({display: 'block'})
+						$('#dialpad-tab-transfer-num').val(phoneNumber)
+						$('#dialpad-tab-transfer-amount-input-wrapper').css({display: 'block'})
+						$('#dialpad-tab-transfer-ref-input-wrapper').css({display: 'block'})
+						$('.select-funding-source').css({display: 'block'})
+
+					}else{
+						// alert('Only MTN Numbers support at the moment')
+						$('#err-modal-heading').text('Error')
+						$('#err-modal-msg').text(`Unsupported Mobile Money Wallet`)
+						let error_modal = M.Modal.getInstance($('#error-modal'));
+						error_modal.open(); 
+					}
+
+				}
+
+				M.updateTextFields()
+				// console.log('The following contact has been selected:' + JSON.stringify(contact));
+				/*
+				{ "id": "1746", "rawId": "1721", "displayName": "Alex - MTN", "name": { "familyName": "MTN", "givenName": "Alex", "middleName": "-", "formatted": "Alex - MTN" }, "nickname": null, "phoneNumbers": [{ "id": "8226", "pref": false, "value": "+260 96 8220782", "type": "mobile" }], "emails": null, "addresses": null, "ims": null, "organizations": null, "birthday": null, "note": null, "photos": null, "categories": null, "urls": null }
+				*/
+			},function(err){
+				// console.log('Error: ' + err);
+				// alert('Error: ' + err);
+			})
+
+		}
+
+		function electricityCheckOut(){
+			// alert('test');
+			// return;
+
+
+			let meter_num = $('#zesco-meter-number-input').val()
+			let top_up_amount = $('#zesco-amount-input').val()
+			let pm_id = $('.select-funding-source').data('payment-method-id')
+
+			let service = 'zesco'
+
+			if (!pm_id) {
+				alert('Funding Source is required.')
+				return;
+			}
+			if (!meter_num) {
+				alert('Meter number is required.')
+				return;
+			}
+
+			if (!top_up_amount) {
+				alert('Top Up amount is required.')
+				return;
+			}
+			// !!!PROCESS SAVED PM
+			let top_up_data = JSON.stringify({
+				'pmid':pm_id,
+				'topupnumber':meter_num,
+				'service':service,
+				'topupamount':top_up_amount,
+				'vouchertype': ''
+			})
+
+			localStorage.setItem('top_up_data',top_up_data)
+
+			if (pm_id == 'new') {
+				console.log('zesco pay_with_unsaved_pm')
+				// pay_with_unsaved_pm(save_payment_method='false')
+				show_save_pm_dialog()
+			}else{
+				pay_with_saved_pm()
+			}
+		}		
+
+		function onConfirmSavePM(button) {
+				let service_type = localStorage.getItem('service_type');
+				if (button == 1) {
+					// console.log('saving pm')
+					if(service_type == 'bill_payment'){
+						pay_with_unsaved_pm(save_payment_method='true')
+					}
+					if(service_type == 'money_transfer'){
+						transfer_with_unsaved_pm(save_payment_method='true')
+					}
+					
+				}else{
+					// pay_with_unsaved_pm(save_payment_method='false')
+					if(service_type == 'bill_payment'){
+						pay_with_unsaved_pm(save_payment_method='false')
+					}
+					if(service_type == 'money_transfer'){
+						transfer_with_unsaved_pm(save_payment_method='false')
+					}
+				}
+		}
+
+		function show_save_pm_dialog() {
+
+			onConfirmSavePM(2)
+
+			// navigator.notification.confirm(
+			// 	'Would you like to save this payment method?', 
+			// 	onConfirmSavePM,             
+			// 	'Confirm',           
+			// 	'Yes,No'         
+			// );
+		}
+
+		$(document).on('click','.support-contact-btn',function(){
+					// e.preventDefault()
+					let link = $(this).data('link');
+					window.open(link, '_system', 'location=yes');
+		})
+
+		$("#pickIdBtn").click(function(){
+                navigator.camera.getPicture(function(data){
+					console.log(JSON.stringify(data))
+				}, function(err){
+					console.log(JSON.stringify(err))
+				}, { quality: 50,
+                    sourceType: pictureSource, 
+                    allowEdit: true,
+                    destinationType: destinationType
+                });
+        });
+
+	</script>
+</body>
+
+</html>
